@@ -74,6 +74,11 @@ for (int i = 0; i < nodeDirectory.size(); i++){
 return possMatches;
 }
 
+void promptName(std::string prompt, node * newNode){
+std::cout << prompt << std::endl;
+std::cin >> nodeName;
+createNode (newNode, nodeName);
+}
 
 /*
 	Tested:
@@ -89,10 +94,8 @@ std::cout << "Does this family member have a parent node (y/n)? " << std::endl;
 std::cin >> userAns;
 std::string nodeName;
 if (userAns == 'n'){
-	std::cout << "What is the name of the family member / marriage? " << std::endl;
-	std::cin >> nodeName;
 	node newNode;
-	createNode (&newNode, nodeName);
+	promptName ("What is the name of the family member / marriage? ", &newNode);
 	return;
 }
 std::string parentName, nodeName;
@@ -101,10 +104,8 @@ std::cin >> parentName;
 // at some point, find a way to disambiguate apparent duplicate entries
 int parentID = getParentID (parentName)[0];
 
-std::cout << "What is the name of the new family member / marriage? " << std::endl;
-std::cin >> nodeName;
 node newNode;
-createNode (&newNode, nodeName);
+promptName("What is the name of the new family member / marriage? ", &newNode)
 node * pParentNode = nodeDirectory[parentID];
 insertChild(pParentNode, &newNode);
 return;
