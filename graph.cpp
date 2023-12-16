@@ -1,11 +1,12 @@
 # include <iostream>
 # include <vector>
 # include <string>
+# include <set>
 
 typedef struct{
 	std::string name;
 	int ID;
-	std::vector <int> childID;
+	std::set <int> childList;
 }node;
 
 
@@ -17,74 +18,78 @@ typedef struct{
 		assumes a node already exists
 	Param: thisNode - pointer of an existing node
 		thisName - name of node
-	Returns: nothing
 */
 void createNode(node * pThisNode, std::string thisName){
-*(pThisNode).ID = extern globalID;
+*(pThisNode).ID = extern int globalID;
 extern std::vector<node *> nodeDirectory;
 *(pThisNode).name = thisName;
 nodeDirectory.push_back (pThisNode);
 globalID++;
+return;
 }
 
 /*
 	Tested:
 	Description:
 	Param:
-	Returns: 0 if successful, another integer otherwise
 */
-int insertChild (node * parentNode, node * childNode){
-extern std::vector<node *> nodeDirectory;
-int i;
-thisChildID = *(parentNode).childID[i];
-thisChild = nodeDirectory[thisChildID];
-while(i < *(parentNode).childID.size()){
-	thisChildID = *(parentNode).childID[i];
-	thisChild = nodeDirectory[thisChildID];
-	if !(stpcpy(*(childNode).name, *(thisChild).name)> 0)
-		break;
-	i++;
+void insertChild (node * parentNode, node * childNode){
+int childID = *(childNode).ID;
+*(parentNode).childList.insert(childID);
+return;
 }
 
-if (stpcpy(*(childNode).name, *(thisChild).name) == 0)
-	return 1;
+/*
+	Tested:
+	Description:
+	Param:
+*/
+void mergeBranches(node * childNode, int parent1ID, int parent2ID){
+extern std::vector<node*> nodeDirectory;
 
-if (i == *(parentNode).childID.size())
-	*(parentNode).childID.push_back(*(childNode).ID);
-else{
-	lastChild = *(parentNode).childID [*(parentNode).childID.size() - 1];
-	*(parentNode).childID.push_back(lastChild);
-	for (int j = *(parentNode).childID.size(); j > i; j++){
-		node * pTempNode = *(parentNode).childID[j];
-		*(parentNode).childID[j + 1] = pTempNode;
-	}
-	*(parentNode).childID[i] = childNode;
-}
-return 0;
-}
+node * pParent1 = nodeDirectory[parent1ID]
+node * pParent2 = nodeDirectory[parent2ID]
 
-int mergeBranches(node * childNode, int parent1ID, int parent2ID){
-
-if (insertChild (pParent1, &childNode) == 0)
-	return 1;
-if (insertChild (pParent2, &childNode) == 0);
-	return 1;
+insertChild (pParent1, &childNode)
+insertChild (pParent2, &childNode)
 return 0;
 }
 
 
 std::vector<node *> nodeDirectory;
+int globalID = 0;
 
-globalID = 0;
+
+int getParentID (std::string ){
+	
+}
+
+
+/*
+	Tested:
+	Description: lets the user create nodes (with or without a parent node) given a user inputted name
+	Param:
+*/
+void addNodes(){
+	extern int globalID;
+	extern std::vector<node *> nodeDirectory;
+
+	char userAns;
+	std::cout << "Does this family member have a parent node (y/n) " << std::endl;
+	std::cin >> userAns;
+	if (userAns == 'y')
+		//
+	else
+		//
+	
+	
+	
+	return;
+}
+
 
 int main(){
-	node firstNode;
-	createNode (&firstNode, "Terah")
-	std::vector <std::string> children = {"Abraham & Sarah", "Abraham & Hagar", "Nahor & Milcah"}
-	for (auto childName : children){
-		node newNode;
 		
-	}
 	
 	return 0;
 }
