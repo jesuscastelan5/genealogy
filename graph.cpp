@@ -59,9 +59,19 @@ return 0;
 std::vector<node *> nodeDirectory;
 int globalID = 0;
 
-
-int getParentID (std::string ){
-	
+/*
+	Description: gives users a list of possible matches to parentName
+*/
+std::vector<int> getParentID (std::string parentName){
+extern std::vector<node *> nodeDirectory;
+std::vector <int> possMatches;
+for (int i = 0; i < nodeDirectory.size(); i++){
+	node * pThisNode = nodeDirectory[i];
+	if (*(pThisNode).name == parentName){
+		possMatches.push_back(*(pThisNodes).ID);
+	}
+}
+return possMatches;
 }
 
 
@@ -71,20 +81,33 @@ int getParentID (std::string ){
 	Param:
 */
 void addNodes(){
-	extern int globalID;
-	extern std::vector<node *> nodeDirectory;
+extern int globalID;
+extern std::vector<node *> nodeDirectory;
 
-	char userAns;
-	std::cout << "Does this family member have a parent node (y/n) " << std::endl;
-	std::cin >> userAns;
-	if (userAns == 'y')
-		//
-	else
-		//
-	
-	
-	
+char userAns;
+std::cout << "Does this family member have a parent node (y/n)? " << std::endl;
+std::cin >> userAns;
+std::string nodeName;
+if (userAns == 'n'){
+	std::cout << "What is the name of the family member / marriage? " << std::endl;
+	std::cin >> nodeName;
+	node newNode;
+	createNode (&newNode, nodeName);
 	return;
+}
+std::string parentName, nodeName;
+std::cout << "What is the name of the parent / parent marriage? " << std::endl;
+std::cin >> parentName;
+// at some point, find a way to disambiguate apparent duplicate entries
+int parentID = getParentID (parentName)[0];
+
+std::cout << "What is the name of the new family member / marriage? " << std::endl;
+std::cin >> nodeName;
+node newNode;
+createNode (&newNode, nodeName);
+node * pParentNode = nodeDirectory[parentID];
+insertChild(pParentNode, &newNode);
+return;
 }
 
 
