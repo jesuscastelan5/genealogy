@@ -5,7 +5,7 @@
 typedef struct{
 	std::string name;
 	int ID;
-	std::vector <node *> child;
+	std::vector <int> childID;
 }node;
 
 
@@ -22,9 +22,9 @@ typedef struct{
 void createNode(node * pThisNode, std::string thisName){
 *(pThisNode).ID = extern globalID;
 extern std::vector<node *> nodeDirectory;
-globalID++;
 *(pThisNode).name = thisName;
 nodeDirectory.push_back (pThisNode);
+globalID++;
 }
 
 /*
@@ -34,24 +34,31 @@ nodeDirectory.push_back (pThisNode);
 	Returns: 0 if successful, another integer otherwise
 */
 int insertChild (node * parentNode, node * childNode){
+extern std::vector<node *> nodeDirectory;
 int i;
-while(i < *(parentNode).child.size() && stpcpy(*(childNode).name, *(parentNode).child[i].name)> 0){
+thisChildID = *(parentNode).childID[i];
+thisChild = nodeDirectory[thisChildID];
+while(i < *(parentNode).childID.size()){
+	thisChildID = *(parentNode).childID[i];
+	thisChild = nodeDirectory[thisChildID];
+	if !(stpcpy(*(childNode).name, *(thisChild).name)> 0)
+		break;
 	i++;
 }
-	
-if (stpcpy(*(childNode).name, *(parentNode).child[i].name) == 0)
+
+if (stpcpy(*(childNode).name, *(thisChild).name) == 0)
 	return 1;
 
-if (i == *(parentNode).child.size())
-	*(parentNode).child.push_back(childNode);
+if (i == *(parentNode).childID.size())
+	*(parentNode).childID.push_back(*(childNode).ID);
 else{
-	lastChild = *(parentNode).child [*(parentNode).child.size() - 1];
-	*(parentNode).child.push_back(lastChild);
-	for (int j = *(parentNode).child.size(); j > i; j++){
-		node * pTempNode = *(parentNode).child[j];
-		*(parentNode).child[j + 1] = pTempNode;
+	lastChild = *(parentNode).childID [*(parentNode).childID.size() - 1];
+	*(parentNode).childID.push_back(lastChild);
+	for (int j = *(parentNode).childID.size(); j > i; j++){
+		node * pTempNode = *(parentNode).childID[j];
+		*(parentNode).childID[j + 1] = pTempNode;
 	}
-	*(parentNode).child[i] = childNode;
+	*(parentNode).childID[i] = childNode;
 }
 return 0;
 }
@@ -72,7 +79,12 @@ globalID = 0;
 
 int main(){
 	node firstNode;
-	createNode (&firstNode, )
+	createNode (&firstNode, "Terah")
+	std::vector <std::string> children = {"Abraham & Sarah", "Abraham & Hagar", "Nahor & Milcah"}
+	for (auto childName : children){
+		node newNode;
+		
+	}
 	
 	return 0;
 }
