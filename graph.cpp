@@ -20,7 +20,8 @@ typedef struct{
 		thisName - name of node
 */
 void createNode(node * pThisNode, std::string thisName){
-	*(pThisNode).ID = extern int globalID;
+	extern int globalID;
+	*(pThisNode).ID = globalID;
 	extern std::vector<node> nodeDirectory;
 	*(pThisNode).name = thisName;
 	nodeDirectory.push_back (*(pThisNode));
@@ -47,11 +48,11 @@ void insertChild (node * parentNode, node * childNode){
 void mergeBranches(node * childNode, int parent1ID, int parent2ID){
 	extern std::vector<node> nodeDirectory;
 
-	node parent1 = nodeDirectory[parent1ID]
-	node parent2 = nodeDirectory[parent2ID]
+	node parent1 = nodeDirectory[parent1ID];
+	node parent2 = nodeDirectory[parent2ID];
 
-	insertChild (&parent1, &childNode)
-	insertChild (&parent2, &childNode)
+	insertChild (&parent1, childNode);
+	insertChild (&parent2, childNode);
 	return;
 }
 
@@ -74,6 +75,7 @@ std::vector<int> getParentID (std::string parentName){
 }
 
 void promptName(std::string prompt, node * newNode){
+	std::string nodeName;
 	std::cout << prompt << std::endl;
 	std::cin >> nodeName;
 	createNode (newNode, nodeName);
@@ -98,14 +100,14 @@ void addNodes(){
 		promptName ("What is the name of the family member / marriage? ", &newNode);
 		return;
 	}
-	std::string parentName, nodeName;
+	std::string parentName;
 	std::cout << "What is the name of the parent / parent marriage? " << std::endl;
 	std::cin >> parentName;
 	// at some point, find a way to disambiguate apparent duplicate entries
 	int parentID = getParentID (parentName)[0];
 
 	node newNode;
-	promptName("What is the name of the new family member / marriage? ", &newNode)
+	promptName("What is the name of the new family member / marriage? ", &newNode);
 	node parentNode = nodeDirectory[parentID];
 	insertChild(&parentNode, &newNode);
 	return;
@@ -114,13 +116,14 @@ void addNodes(){
 
 std::string childToList (node * pParent){
 	std::string listOChildren;
-	for (int i = 0; i < *(pParent).childList.size() - 1; i++){
-		child = *(pParent).childList[i];
-		listOChildren = listOChildren + to_string(child);
+	int i;
+	for (i = 0; i < *(pParent).childList.size() - 1; i++){
+		int child = *(pParent).childList[i];
+		listOChildren = listOChildren + std::to_string(child);
 		listOChildren.push_back(',');
 	}
 	child = *(pParent).childList[i];
-	listOChildren = listOChildren + to_string(child);
+	listOChildren = listOChildren + std::to_string(child);
 	
 	return listOChildren;
 }
@@ -130,12 +133,12 @@ void saveGeneology(std::string fileName){
 	
 	std::ofstream myFile (fileName + ".csv");
 	for (auto entry : nodeDirectory){
-		std::string childList = childToList (entry);
-		myFile << to_string(entry.ID) << ";" << entry.name << ";" << childList;
+		std::string childList = childToList (&entry);
+		myFile << std::to_string(entry.ID) << ";" << entry.name << ";" << childList;
 	}
 
 	myFile.close();
-	return 0;
+	return ;
 }
 
 
