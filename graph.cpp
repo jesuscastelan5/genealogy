@@ -2,6 +2,7 @@
 # include <vector>
 # include <string>
 # include <set>
+# include <fstream>
 
 typedef struct{
 	std::string name;
@@ -131,7 +132,8 @@ std::string childToList (node * pParent){
 void saveGeneology(std::string fileName){
 	extern std::vector<node> nodeDirectory;
 	
-	std::ofstream myFile (fileName + ".csv");
+	std::ofstream myFile;
+	myFile.open(fileName + ".csv");
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (&entry);
 		myFile << std::to_string(entry.ID) << ";" << entry.name << ";" << childList;
