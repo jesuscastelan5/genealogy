@@ -21,9 +21,9 @@ typedef struct{
 */
 void createNode(node * pThisNode, std::string thisName){
 	extern int globalID;
-	*(pThisNode).ID = globalID;
+	pThisNode->ID = globalID;
 	extern std::vector<node> nodeDirectory;
-	*(pThisNode).name = thisName;
+	pThisNode->name = thisName;
 	nodeDirectory.push_back (*(pThisNode));
 	globalID++;
 	return;
@@ -35,8 +35,8 @@ void createNode(node * pThisNode, std::string thisName){
 	Param:
 */
 void insertChild (node * parentNode, node * childNode){
-	int childID = *(childNode).ID;
-	*(parentNode).childList.insert(childID);
+	int childID = childNode->ID;
+	parentNode->childList.insert(childID);
 	return;
 }
 
@@ -117,12 +117,12 @@ void addNodes(){
 std::string childToList (node * pParent){
 	std::string listOChildren;
 	int i;
-	for (i = 0; i < *(pParent).childList.size() - 1; i++){
-		int child = *(pParent).childList[i];
+	for (i = 0; i < pParent->childList.size() - 1; i++){
+		int child = pParent->childList[i];
 		listOChildren = listOChildren + std::to_string(child);
 		listOChildren.push_back(',');
 	}
-	child = *(pParent).childList[i];
+	int child = pParent->childList[i];
 	listOChildren = listOChildren + std::to_string(child);
 	
 	return listOChildren;
