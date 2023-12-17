@@ -22,9 +22,9 @@ typedef struct{
 */
 void createNode(node * pThisNode, std::string thisName){
 *(pThisNode).ID = extern int globalID;
-extern std::vector<node *> nodeDirectory;
+extern std::vector<node> nodeDirectory;
 *(pThisNode).name = thisName;
-nodeDirectory.push_back (pThisNode);
+nodeDirectory.push_back (*(pThisNode));
 globalID++;
 return;
 }
@@ -46,30 +46,29 @@ return;
 	Param:
 */
 void mergeBranches(node * childNode, int parent1ID, int parent2ID){
-extern std::vector<node*> nodeDirectory;
+extern std::vector<node> nodeDirectory;
 
-node * pParent1 = nodeDirectory[parent1ID]
-node * pParent2 = nodeDirectory[parent2ID]
+node parent1 = nodeDirectory[parent1ID]
+node parent2 = nodeDirectory[parent2ID]
 
-insertChild (pParent1, &childNode)
-insertChild (pParent2, &childNode)
+insertChild (&parent1, &childNode)
+insertChild (&parent2, &childNode)
 return 0;
 }
 
 
-std::vector<node *> nodeDirectory;
+std::vector<node> nodeDirectory;
 int globalID = 0;
 
 /*
 	Description: gives users a list of possible matches to parentName
 */
 std::vector<int> getParentID (std::string parentName){
-extern std::vector<node *> nodeDirectory;
+extern std::vector<node> nodeDirectory;
 std::vector <int> possMatches;
-for (int i = 0; i < nodeDirectory.size(); i++){
-	node * pThisNode = nodeDirectory[i];
-	if (*(pThisNode).name == parentName){
-		possMatches.push_back(*(pThisNodes).ID);
+for (auto thisNode : nodeDirectory){
+	if (thisNode.name == parentName){
+		possMatches.push_back(thisNode.ID);
 	}
 }
 return possMatches;
@@ -88,7 +87,7 @@ createNode (newNode, nodeName);
 */
 void addNodes(){
 extern int globalID;
-extern std::vector<node *> nodeDirectory;
+extern std::vector<node> nodeDirectory;
 
 char userAns;
 std::cout << "Does this family member have a parent node (y/n)? " << std::endl;
@@ -107,8 +106,8 @@ int parentID = getParentID (parentName)[0];
 
 node newNode;
 promptName("What is the name of the new family member / marriage? ", &newNode)
-node * pParentNode = nodeDirectory[parentID];
-insertChild(pParentNode, &newNode);
+node parentNode = nodeDirectory[parentID];
+insertChild(&parentNode, &newNode);
 return;
 }
 
@@ -127,12 +126,12 @@ std::string childToList (node * pParent){
 }
 
 void saveGeneology(std::string fileName){
-	extern std::vector<node*> nodeDirectory;
+	extern std::vector<node> nodeDirectory;
 	
 	std::ofstream myFile (fileName + ".csv");
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry);
-		myFile << *(entry).ID << ";" << *(entry).name << ";" << childList;
+		myFile << entry.ID << ";" << entry.name << ";" << childList;
 	}
 
 	myFile.close();
