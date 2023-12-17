@@ -7,7 +7,7 @@
 typedef struct{
 	std::string name;
 	int ID;
-	std::set <int> childList;
+	std::vector <int> childList;
 }node;
 
 
@@ -37,7 +37,22 @@ void createNode(node * pThisNode, std::string thisName){
 */
 void insertChild (node * parentNode, node * childNode){
 	int childID = childNode->ID;
-	parentNode->childList.insert(childID);
+	int i;
+	while (i < parentNode->childList.size() && childID> parentNode->childList[i]){
+		i++;
+	}
+	if (i == parentNode->childList.size()){
+		parentNode->childList.push_back(childID);
+		return;
+	}
+	
+	int lastChild = parentNode->childList[parentNode->childList.size() - 1];
+	parentNode->childList.push_back(lastChild);
+	for (int j = parentNode->childList.size(); j > i; j--){
+		int tempChild = parentNode->childList[j];
+		parentNode->childList[j + 1] = tempChild;
+	}
+	parentNode->childList[i] = childID;
 	return;
 }
 
