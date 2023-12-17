@@ -151,7 +151,7 @@ void saveGeneology(std::string fileName){
 	myFile.open(fileName + ".csv");
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (&entry);
-		myFile << std::to_string(entry.ID) << ";" << entry.name << ";" << childList;
+		myFile << std::to_string(entry.ID) << ";" << entry.name << ";" << childList << std::endl;
 	}
 
 	myFile.close();
@@ -160,7 +160,16 @@ void saveGeneology(std::string fileName){
 
 
 int main(){
+	node firstNode;
+	createNode(&firstNode, "Terah");
+	std::vector <std::string> childList = {"Abraham & Hagar", "Abraham & Sarah", "Nahor & Milcah"};
+	for (auto childName : childList){
+		node tempChild;
+		createNode(&tempChild, childName);
+		insertChild(&firstNode, &tempChild);
+	}
 	
+	saveGeneology ("Biblical geneology");
 	
 	return 0;
 }
