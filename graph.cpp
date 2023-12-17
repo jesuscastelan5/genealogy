@@ -169,9 +169,9 @@ int main(){
 	createNode(&firstNode, "Terah");
 	std::vector <std::string> childList = {"Abraham & Hagar", "Abraham & Sarah", "Nahor & Milcah"};
 	for (auto childName : childList){
-		node tempChild;
-		createNode(&tempChild, childName);
-		insertChild(&firstNode, &tempChild);
+		node * tempChild = new node;
+		createNode(tempChild, childName);
+		insertChild(&firstNode, tempChild);
 	}
 	
 	saveGeneology ("Biblical geneology");
