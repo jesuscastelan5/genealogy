@@ -3,6 +3,7 @@
 # include <string>
 # include <set>
 # include <fstream>
+# include <boost/lexical_cast.hpp>
 
 typedef struct{
 	std::string name;
@@ -150,8 +151,8 @@ void saveGeneology(std::string fileName){
 	std::ofstream myFile;
 	myFile.open(fileName + ".csv");
 	for (auto entry : nodeDirectory){
-		//std::string childList = childToList (entry);
-		myFile << std::to_string(entry->ID) << ";" << entry->name << std::endl;
+		std::string childList = childToList (entry);
+		myFile << std::to_string(entry->ID) << ";" << entry->name << ";" << childList << std::endl;
 	}
 
 	myFile.close();
