@@ -136,11 +136,11 @@ std::string childToList (node * pParent){
 	int i;
 	for (i = 0; i < pParent->childList.size(); i++){
 		int child = pParent->childList[i];
-		listOChildren = listOChildren + std::to_string(child);
+		listOChildren = listOChildren + IntToStr(child);
 		listOChildren.push_back(',');
 	}
 	int child = pParent->childList[i];
-	listOChildren = listOChildren + std::to_string(child);
+	listOChildren = listOChildren + IntToStr(child);
 	
 	return listOChildren;
 }
@@ -152,7 +152,7 @@ void saveGeneology(std::string fileName){
 	myFile.open(fileName + ".csv");
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry);
-		myFile << std::to_string(entry->ID) << ";" << entry->name << ";" << childList << std::endl;
+		myFile << IntToStr(entry->ID) << ";" << entry->name << ";" << childList << std::endl;
 	}
 
 	myFile.close();
