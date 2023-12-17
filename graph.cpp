@@ -2,7 +2,6 @@
 # include <vector>
 # include <string>
 # include <set>
-# include <fmt>
 
 typedef struct{
 	std::string name;
@@ -117,11 +116,11 @@ std::string childToList (node * pParent){
 	std::string listOChildren;
 	for (int i = 0; i < *(pParent).childList.size() - 1; i++){
 		child = *(pParent).childList[i];
-		listOChildren = listOChildren + fmt::format("{}", child);
+		listOChildren = listOChildren + to_string(child);
 		listOChildren.push_back(',');
 	}
 	child = *(pParent).childList[i];
-	listOChildren = listOChildren + fmt::format("{}", child);
+	listOChildren = listOChildren + to_string(child);
 	
 	return listOChildren;
 }
@@ -132,7 +131,7 @@ void saveGeneology(std::string fileName){
 	std::ofstream myFile (fileName + ".csv");
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry);
-		myFile << entry.ID << ";" << entry.name << ";" << childList;
+		myFile << to_string(entry.ID) << ";" << entry.name << ";" << childList;
 	}
 
 	myFile.close();
