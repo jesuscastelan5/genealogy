@@ -104,7 +104,7 @@ std::vector<int> getNodeID (std::string nodeName){
 std::string promptName(std::string prompt){
 	std::string nodeName;
 	std::cout << prompt << std::endl;
-	std::getline (std::cin, nodeName)
+	std::getline (std::cin >> std::ws, nodeName);
 	return nodeName;
 }
 
@@ -279,7 +279,7 @@ int main(){
 		}else if (userResp == 2){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
-			std::getline(std::cin, fileName);
+			std::getline(std::cin >> std::ws, fileName);
 			saveGenealogy(fileName);
 		}else if (userResp == 3)
 			listGenealogy();
