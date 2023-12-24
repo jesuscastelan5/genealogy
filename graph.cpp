@@ -5,6 +5,7 @@
 # include <fstream>
 # include "string tools.h"
 
+// add DOB and DOD at some point
 typedef struct{
 	std::string name;
 	int ID;
@@ -33,6 +34,7 @@ void createNode(node * pThisNode, std::string thisName){
 /*
 	Tested: 12/17/2023
 	Description: adds child ID to childList for parentNode
+		Ensures childList stays sorted in ascending order
 	Param: parentNode, childNode
 */
 void insertChild (node * parentNode, node * childNode){
@@ -160,6 +162,30 @@ std::string childToList (node * pParent, char delimiter){
 	return listOChildren;
 }
 
+
+/*
+	Tested: 
+	Description: shows a list of current nodeDirectory
+*/
+void listGeneology(){
+	extern std::vector<node *> nodeDirectory;
+	
+	// header
+	std::cout.width(4); std::cout << std::right << "ID" <<
+	std::cout.width(40); std::cout << std::left << "Name" <<
+	std::cout.width(20); std::cout << std::left << "Children" << std::endl;
+	for (auto entry : nodeDirectory){
+		std::string childList = childToList (entry, ',');
+		
+		std::cout.width(4); std::cout << std::right <<IntToStr(entry->ID) <<
+		std::cout.width(40); std::cout << std::left << entry->name <<
+		std::cout.width(20); std::cout << std::left << childList << std::endl;
+	}
+
+	return ;
+}
+
+
 /*
 	Tested: 12/23/2023
 	Description: saves nodes to a (txt) file
@@ -204,7 +230,8 @@ int main(){
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::cin >> fileName;
 			saveGeneology(fileName);
-		}
+		}else if (userResp == 3)
+			listGeneology();
 		std::cout << "What would you like to do?" << std::endl;
 		std::cin >> userResp;
 	}
