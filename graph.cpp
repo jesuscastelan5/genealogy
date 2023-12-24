@@ -132,6 +132,8 @@ int findNodeID (std::string prompt){
 			1 corresponds to parent
 */
 void findNAddNode (std::string prompt, int mode, node * pNewNode){
+	extern std::vector<node *> nodeDirectory;
+	
 	int oldNodeID = findNodeID (prompt);
 	node * pOldNode = nodeDirectory[oldNodeID];
 	promptName("What is the name of the new family member / marriage? ", pNewNode);
@@ -148,30 +150,27 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	Description: lets the user create and connect nodes
 	Param:
 */
-void addNodes(){
+void addNodes(node * pNewNode){
 	extern int globalID;
-	extern std::vector<node *> nodeDirectory;
 
 	char userAns;
-	std::cout << "Does this family member have a parent node (y/n)? Type q to quit." << std::endl;
+	std::cout << "Does this family member have an existing parent node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
-	node newNode;
 	if (userAns == 'q')
-		return
+		return;
 	else if (userAns == 'y'){
-		findNAddNode ("What is the name of the parent / parent marriage?", 1, &newNode);
+		findNAddNode ("What is the name of the parent / parent marriage?", 1, pNewNode);
 		return;
 	}
-	std::cout << "Does this family member have a child node (y/n)? Type q to quit." << std::endl;
+	std::cout << "Does this family member have an existing child node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
 	if (userAns == 'q')
 		return;
 	else if (userAns == 'n'){
-		promptName ("What is the name of the family member / marriage? ", &newNode);
+		promptName ("What is the name of the family member / marriage? ", pNewNode);
 		return;
 	}
-	int childID = findNodeID ("What is the name of the child / child marriage?")
-	findNAddNode ("What is the name of the child / child marriage?", 0, &newNode);
+	findNAddNode ("What is the name of the child / child marriage?", 0, pNewNode);
 	return;
 }
 
@@ -185,7 +184,7 @@ void addNodes(){
 */
 std::string childToList (node * pParent, char delimiter){
 	std::string listOChildren;
-	int i;
+	int i = 0;
 	
 	if (pParent->childList.size() == 0)
 		return listOChildren;
@@ -257,19 +256,13 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
-	int userResp;
+	int userResp = -1;
 	
-	std::cout << "Type \\quit to quit" << std::endl;
-	std::cout << "What would you like to do?" << std::endl;
-	std::cout << "0 - quit\n" <<
-		"1 - add family members / marriages\n" <<
-		"2 - save genealogy to a file" <<
-		"3 - list genealogy to screen" << std::endl;
-	std::cin >> userResp;
 	while (userResp != 0){
-		if (userResp == 1)
-			addNodes();
-		else if (userResp == 2){
+		if (userResp == 1){
+			node newNode;
+			addNodes(&newNode);
+		}else if (userResp == 2){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::cin >> fileName;
@@ -277,7 +270,11 @@ int main(){
 		}else if (userResp == 3)
 			listGenealogy();
 		std::cout << "What would you like to do?" << std::endl;
- 		std::cin >> userResp;
+		std::cout << "0 - quit\n" <<
+		"1 - add family members / marriages\n" <<
+		"2 - save genealogy to a file \n" <<
+		"3 - list genealogy to screen" << std::endl;
+		std::cin >> userResp;
 	}
 	
 	return 0;
