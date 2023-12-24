@@ -98,15 +98,14 @@ std::vector<int> getNodeID (std::string nodeName){
 /*
 	Tested:
 	Description: prompts user of name of a new node
-	Param: prompt - the question for user,
-		newNode - the pointer to be given a name
+	Param: prompt - the question for user
+	Returns: name of the node
 */
-void promptName(std::string prompt, node * newNode){
+std::string promptName(std::string prompt){
 	std::string nodeName;
 	std::cout << prompt << std::endl;
 	std::cin >> nodeName;
-	createNode (newNode, nodeName);
-	return;
+	return nodeName;
 }
 
 /*
@@ -117,22 +116,19 @@ void promptName(std::string prompt, node * newNode){
 		-1 if the user quits from here
 */
 int findNodeID (std::string prompt){
+	std::vector<std::string> possMatches = "Hi";
 	std::string nodeName;
-	std::cout << prompt << std::endl;
-	std::cin >> nodeName;
-	if (nodeName == "\quit")
-		return -1;
-	// at some point, find a way to disambiguate apparent duplicate entries
-	possMatches = getNodeID (nodeName)
-	while (possMatches.empty())
-		std::cout << "Sorry, "<< nodeName << " does not exist in the genealogy." << std::endl ;
-		std::cout << prompt << std::endl;
-		std::cin >> nodeName;
+
+	do{
+		if (possMatches.empty())
+			std::cout << "Sorry, "<< nodeName << " does not exist in the genealogy." << std::endl;
+		nodeName = promptName (prompt);
 		if (nodeName == "\quit")
 			return -1;
 		// at some point, find a way to disambiguate apparent duplicate entries
 		possMatches = getNodeID (nodeName)
-	
+	}while (possMatches.empty())
+
 	return possMatches[0];
 }
 
@@ -151,7 +147,8 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	if (oldNodeID == -1)
 		return;
 	node * pOldNode = nodeDirectory[oldNodeID];
-	promptName("What is the name of the new family member / marriage? ", pNewNode);
+	std::string nodeName = promptName("What is the name of the new family member / marriage?");
+	createNode (pNewNode, nodeName);
 	if (mode == 0)
 		insertChild(pNewNode, pOldNode);
 	else
@@ -175,7 +172,7 @@ void addNodes(node * pNewNode){
 	if (userAns == 'q')
 		return;
 	else if (userAns == 'y'){
-		findNAddNode ("What is the name of the parent / parent marriage?", 1, pNewNode);
+		findNAddNode ("What is the name of the parent / parent marriage? Type \quit to quit.", 1, pNewNode);
 		return;
 	}
 	std::cout << "Does this family member have an existing child node (y/n)? Type q to quit." << std::endl;
@@ -183,10 +180,11 @@ void addNodes(node * pNewNode){
 	if (userAns == 'q')
 		return;
 	else if (userAns == 'n'){
-		promptName ("What is the name of the family member / marriage? ", pNewNode);
+		std::string nodeName = promptName ("What is the name of the family member / marriage? ");
+		createNode (pNewNode, nodeName)
 		return;
 	}
-	findNAddNode ("What is the name of the child / child marriage?", 0, pNewNode);
+	findNAddNode ("What is the name of the child / child marriage? Type \quit to quit.", 0, pNewNode);
 	return;
 }
 
