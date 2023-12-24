@@ -131,7 +131,7 @@ void addNodes(){
 }
 
 
-std::string childToList (node * pParent){
+std::string childToList (node * pParent, char delimiter){
 	std::string listOChildren;
 	int i;
 	
@@ -141,7 +141,7 @@ std::string childToList (node * pParent){
 	for (i = 0; i < pParent->childList.size() - 1; i++){
 		int child = pParent->childList[i];
 		listOChildren = listOChildren + IntToStr(child);
-		listOChildren.push_back(',');
+		listOChildren.push_back(delimiter);
 	}
 	int child = pParent->childList[i];
 	listOChildren = listOChildren + IntToStr(child);
@@ -151,14 +151,15 @@ std::string childToList (node * pParent){
 
 void saveGeneology(std::string fileName){
 	extern std::vector<node *> nodeDirectory;
+	std::string colDelimiter = ";";
 	
 	std::ofstream myFile;
 	myFile.open(fileName + ".txt");
 	// header
-	myFile << "ID" << ";" << "Name" << ";" << "Children" << std::endl;
+	myFile << "ID" << colDelimiter << "Name" << colDelimiter << "Children" << std::endl;
 	for (auto entry : nodeDirectory){
-		std::string childList = childToList (entry);
-		myFile << IntToStr(entry->ID) << ";" << entry->name << ";" << childList << std::endl;
+		std::string childList = childToList (entry, ',');
+		myFile << IntToStr(entry->ID) << colDelimiter << entry->name << colDelimiter << childList << std::endl;
 	}
 
 	myFile.close();
