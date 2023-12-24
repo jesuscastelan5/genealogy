@@ -104,7 +104,7 @@ std::vector<int> getNodeID (std::string nodeName){
 std::string promptName(std::string prompt){
 	std::string nodeName;
 	std::cout << prompt << std::endl;
-	std::cin >> nodeName;
+	std::getline (std::cin, nodeName)
 	return nodeName;
 }
 
@@ -116,18 +116,18 @@ std::string promptName(std::string prompt){
 		-1 if the user quits from here
 */
 int findNodeID (std::string prompt){
-	std::vector<std::string> possMatches = "Hi";
+	std::vector<int> possMatches = {-1};
 	std::string nodeName;
 
 	do{
 		if (possMatches.empty())
 			std::cout << "Sorry, "<< nodeName << " does not exist in the genealogy." << std::endl;
 		nodeName = promptName (prompt);
-		if (nodeName == "\quit")
+		if (nodeName == "\\quit")
 			return -1;
 		// at some point, find a way to disambiguate apparent duplicate entries
-		possMatches = getNodeID (nodeName)
-	}while (possMatches.empty())
+		possMatches = getNodeID (nodeName);
+	}while (possMatches.empty());
 
 	return possMatches[0];
 }
@@ -172,7 +172,7 @@ void addNodes(node * pNewNode){
 	if (userAns == 'q')
 		return;
 	else if (userAns == 'y'){
-		findNAddNode ("What is the name of the parent / parent marriage? Type \quit to quit.", 1, pNewNode);
+		findNAddNode ("What is the name of the parent / parent marriage? Type \\quit to quit.", 1, pNewNode);
 		return;
 	}
 	std::cout << "Does this family member have an existing child node (y/n)? Type q to quit." << std::endl;
@@ -181,10 +181,10 @@ void addNodes(node * pNewNode){
 		return;
 	else if (userAns == 'n'){
 		std::string nodeName = promptName ("What is the name of the family member / marriage? ");
-		createNode (pNewNode, nodeName)
+		createNode (pNewNode, nodeName);
 		return;
 	}
-	findNAddNode ("What is the name of the child / child marriage? Type \quit to quit.", 0, pNewNode);
+	findNAddNode ("What is the name of the child / child marriage? Type \\quit to quit.", 0, pNewNode);
 	return;
 }
 
@@ -279,7 +279,7 @@ int main(){
 		}else if (userResp == 2){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
-			std::cin >> fileName;
+			std::getline(std::cin, fileName);
 			saveGenealogy(fileName);
 		}else if (userResp == 3)
 			listGenealogy();
