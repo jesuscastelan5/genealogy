@@ -13,9 +13,8 @@ typedef struct{
 
 
 /*
-	Tested:
-	Description:
-		gives properties to newly made nodes
+	Tested: 12/17/2023
+	Description: gives properties to newly made nodes
 		updates nodeDirectory
 		assumes a node already exists
 	Param: thisNode - pointer of an existing node
@@ -32,9 +31,9 @@ void createNode(node * pThisNode, std::string thisName){
 }
 
 /*
-	Tested:
-	Description:
-	Param:
+	Tested: 12/17/2023
+	Description: adds child ID to childList for parentNode
+	Param: parentNode, childNode
 */
 void insertChild (node * parentNode, node * childNode){
 	int childID = childNode->ID;
@@ -59,8 +58,11 @@ void insertChild (node * parentNode, node * childNode){
 
 /*
 	Tested:
-	Description:
-	Param:
+	Description: adds child ID to childList for two parent nodes
+		does this indirectly by using the nodeDirectory
+		rather than using the raw pointers
+		figured it'd be safer
+	Param: childNode, parent1ID, parent2ID
 */
 void mergeBranches(node * childNode, int parent1ID, int parent2ID){
 	extern std::vector<node *> nodeDirectory;
@@ -72,10 +74,6 @@ void mergeBranches(node * childNode, int parent1ID, int parent2ID){
 	insertChild (pParent2, childNode);
 	return;
 }
-
-
-std::vector<node *> nodeDirectory;
-int globalID = 0;
 
 /*
 	Tested:
@@ -185,6 +183,9 @@ void saveGeneology(std::string fileName){
 	return ;
 }
 
+
+std::vector<node *> nodeDirectory;
+int globalID = 0;
 
 int main(){
 	std::string userResp;
