@@ -274,7 +274,7 @@ int main(){
 	
 	while (userResp != 0){
 		if (userResp == 1){
-			node newNode;
+			node * pNewNode = new node;
 			addNodes(&newNode);
 		}else if (userResp == 2){
 			std::string fileName;
