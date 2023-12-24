@@ -238,7 +238,7 @@ int main(){
 			std::cin >> fileName;
 			saveGeneology(fileName);
 		}else if (userResp == 3)
-+			listGeneology();
+			listGeneology();
 		std::cout << "What would you like to do?" << std::endl;
  		std::cin >> userResp;
  	}
