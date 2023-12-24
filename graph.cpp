@@ -78,7 +78,10 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 /*
+	Tested:
 	Description: gives users a list of possible matches to parentName
+	Param: parentName - name part of the parent node
+	Returns: possMatches - list of IDs that potentially match user's query
 */
 std::vector<int> getParentID (std::string parentName){
 	extern std::vector<node *> nodeDirectory;
@@ -91,6 +94,12 @@ std::vector<int> getParentID (std::string parentName){
 	return possMatches;
 }
 
+/*
+	Tested:
+	Description: prompts user of name of a new node
+	Param: prompt - the question for user,
+		newNode - the pointer to be given a name
+*/
 void promptName(std::string prompt, node * newNode){
 	std::string nodeName;
 	std::cout << prompt << std::endl;
@@ -111,9 +120,8 @@ void addNodes(){
 	char userAns;
 	std::cout << "Does this family member have a parent node (y/n)? " << std::endl;
 	std::cin >> userAns;
-	std::string nodeName;
+	node newNode;
 	if (userAns == 'n'){
-		node newNode;
 		promptName ("What is the name of the family member / marriage? ", &newNode);
 		return;
 	}
@@ -122,15 +130,20 @@ void addNodes(){
 	std::cin >> parentName;
 	// at some point, find a way to disambiguate apparent duplicate entries
 	int parentID = getParentID (parentName)[0];
-
-	node newNode;
-	promptName("What is the name of the new family member / marriage? ", &newNode);
 	node * pParentNode = nodeDirectory[parentID];
+	promptName("What is the name of the new family member / marriage? ", &newNode);
 	insertChild(pParentNode, &newNode);
 	return;
 }
 
 
+/*
+	Tested: 12/23/2023
+	Description: makes a string list of child nodes from pParent
+	Param: pParent (node ptr)
+		delimiter - seperates IDs of children in string
+	Returns: listOChildren
+*/
 std::string childToList (node * pParent, char delimiter){
 	std::string listOChildren;
 	int i;
@@ -149,6 +162,12 @@ std::string childToList (node * pParent, char delimiter){
 	return listOChildren;
 }
 
+/*
+	Tested: 12/23/2023
+	Description: saves nodes to a (txt) file
+		csv file testing ongoing
+	Param: fileName
+*/
 void saveGeneology(std::string fileName){
 	extern std::vector<node *> nodeDirectory;
 	std::string colDelimiter = ";";
@@ -168,16 +187,14 @@ void saveGeneology(std::string fileName){
 
 
 int main(){
-	node firstNode;
-	createNode(&firstNode, "Terah");
-	std::vector <std::string> childList = {"Abraham & Hagar", "Abraham & Sarah", "Nahor & Milcah"};
-	for (auto childName : childList){
-		node * tempChild = new node;
-		createNode(tempChild, childName);
-		insertChild(&firstNode, tempChild);
-	}
+	std::string userResp;
+
+	std::cout << "Type \quit to quit" << std::endl;
 	
-	saveGeneology ("Biblical geneology");
+	while (userResp != "\quit"){
+		addNodes();
+		std::cin >> userResp;
+	}
 	
 	return 0;
 }
