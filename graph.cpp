@@ -80,15 +80,15 @@ void mergeBranches(node * childNode, int parent1ID, int parent2ID){
 
 /*
 	Tested:
-	Description: gives users a list of possible matches to parentName
-	Param: parentName - name part of the parent node
+	Description: gives users a list of possible matches to nodeName
+	Param: nodeName - name part of the node
 	Returns: possMatches - list of IDs that potentially match user's query
 */
-std::vector<int> getParentID (std::string parentName){
+std::vector<int> getNodeID (std::string nodeName){
 	extern std::vector<node *> nodeDirectory;
 	std::vector <int> possMatches;
 	for (auto pThisNode : nodeDirectory){
-		if (pThisNode->name == parentName){
+		if (pThisNode->name == nodeName){
 			possMatches.push_back(pThisNode->ID);
 		}
 	}
@@ -129,7 +129,7 @@ void addNodes(){
 		std::cout << "What is the name of the parent / parent marriage? " << std::endl;
 		std::cin >> parentName;
 		// at some point, find a way to disambiguate apparent duplicate entries
-		int parentID = getParentID (parentName)[0];
+		int parentID = getNodeID (parentName)[0];
 		node * pParentNode = nodeDirectory[parentID];
 		promptName("What is the name of the new family member / marriage? ", &newNode);
 		insertChild(pParentNode, &newNode);
@@ -147,7 +147,7 @@ void addNodes(){
 	std::cout << "What is the name of the child / child marriage? " << std::endl;
 	std::cin >> childName;
 	// at some point, find a way to disambiguate apparent duplicate entries
-	int childID = getParentID (childName)[0];
+	int childID = getNodeID (childName)[0];
 	node * pChildNode = nodeDirectory[childID];
 	promptName("What is the name of the new family member / marriage? ", &newNode);
 	insertChild(&newNode, pChildNode);
