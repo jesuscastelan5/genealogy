@@ -33,14 +33,14 @@ void createNode(node * pThisNode, std::string thisName){
 }
 
 /*
-	Tested: 12/17/2023
+	Tested: 12/23/2023
 	Description: adds child ID to childList for parentNode
 		Ensures childList stays sorted in ascending order
 	Param: parentNode, childNode
 */
 void insertChild (node * parentNode, node * childNode){
 	int childID = childNode->ID;
-	int i;
+	int i = 0;
 	while (i < parentNode->childList.size() && childID> parentNode->childList[i]){
 		i++;
 	}
@@ -165,7 +165,7 @@ std::string childToList (node * pParent, char delimiter){
 
 
 /*
-	Tested: 
+	Tested: 12/23/2023
 	Description: shows a list of current nodeDirectory
 */
 void listGeneology(){
@@ -241,7 +241,7 @@ int main(){
 			listGeneology();
 		std::cout << "What would you like to do?" << std::endl;
  		std::cin >> userResp;
- 	}
+	}
 	
 	return 0;
 }
