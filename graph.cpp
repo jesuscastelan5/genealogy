@@ -168,7 +168,7 @@ std::string childToList (node * pParent, char delimiter){
 	Tested: 12/23/2023
 	Description: shows a list of current nodeDirectory
 */
-void listGeneology(){
+void listGenealogy(){
 	extern std::vector<node *> nodeDirectory;
 	int ID_WIDTH = 5;
 	int NAME_WIDTH = 41;
@@ -194,11 +194,10 @@ void listGeneology(){
 
 /*
 	Tested: 12/23/2023
-	Description: saves nodes to a (txt) file
-		csv file testing ongoing
-	Param: fileName
+	Description: saves nodes to a (txt/csv) file
+	Param: fileName - name of file
 */
-void saveGeneology(std::string fileName){
+void saveGenealogy(std::string fileName){
 	extern std::vector<node *> nodeDirectory;
 	std::string colDelimiter = ";";
 	
@@ -236,9 +235,9 @@ int main(){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::cin >> fileName;
-			saveGeneology(fileName);
+			saveGenealogy(fileName);
 		}else if (userResp == 3)
-			listGeneology();
+			listGenealogy();
 		std::cout << "What would you like to do?" << std::endl;
  		std::cin >> userResp;
 	}
