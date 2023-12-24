@@ -3,6 +3,7 @@
 # include <string>
 # include <set>
 # include <fstream>
+# include <iomanip>
 # include "string tools.h"
 
 // add DOB and DOD at some point
@@ -169,20 +170,25 @@ std::string childToList (node * pParent, char delimiter){
 */
 void listGeneology(){
 	extern std::vector<node *> nodeDirectory;
+	int ID_WIDTH = 5;
+	int NAME_WIDTH = 41;
+	int CHILD_WIDTH = 20;
 	
 	// header
-	std::cout.width(4); std::cout << std::right << "ID" <<
-	std::cout.width(40); std::cout << std::left << "Name" <<
-	std::cout.width(20); std::cout << std::left << "Children" << std::endl;
+	std::cout << std::setw(ID_WIDTH) << std::right << "ID";
+	std::cout << " ";
+	std::cout << std::setw(NAME_WIDTH) << std::left << "Name";
+	std::cout << std::setw(CHILD_WIDTH) << std::left << "Children" << std::endl;
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry, ',');
 		
-		std::cout.width(4); std::cout << std::right <<IntToStr(entry->ID) <<
-		std::cout.width(40); std::cout << std::left << entry->name <<
-		std::cout.width(20); std::cout << std::left << childList << std::endl;
+		std::cout << std::setw(ID_WIDTH) << std::right << IntToStr(entry->ID);
+		std::cout << " "; 
+		std::cout << std::setw(NAME_WIDTH) << std::left << entry->name;
+		std::cout << std::setw(CHILD_WIDTH) << std::left << childList << std::endl;
 	}
 
-	return ;
+	return;
 }
 
 
@@ -206,7 +212,7 @@ void saveGeneology(std::string fileName){
 	}
 
 	myFile.close();
-	return ;
+	return;
 }
 
 
@@ -215,12 +221,13 @@ int globalID = 0;
 
 int main(){
 	int userResp;
-
+	
 	std::cout << "Type \\quit to quit" << std::endl;
 	std::cout << "What would you like to do?" << std::endl;
 	std::cout << "0 - quit\n" <<
 		"1 - add family members / marriages\n" <<
-		"2 - save genealogy to a file" << std::endl;
+		"2 - save genealogy to a file" <<
+		"3 - list genealogy to screen" << std::endl;
 	std::cin >> userResp;
 	while (userResp != 0){
 		if (userResp == 1)
@@ -231,10 +238,10 @@ int main(){
 			std::cin >> fileName;
 			saveGeneology(fileName);
 		}else if (userResp == 3)
-			listGeneology();
++			listGeneology();
 		std::cout << "What would you like to do?" << std::endl;
-		std::cin >> userResp;
-	}
+ 		std::cin >> userResp;
+ 	}
 	
 	return 0;
 }
