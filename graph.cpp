@@ -119,21 +119,38 @@ void addNodes(){
 	extern std::vector<node *> nodeDirectory;
 
 	char userAns;
-	std::cout << "Does this family member have a parent node (y/n)? " << std::endl;
+	std::cout << "Does this family member have a parent node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
 	node newNode;
-	if (userAns == 'n'){
+	if (userAns == 'q')
+		return
+	else if (userAns == 'y'){
+		std::string parentName;
+		std::cout << "What is the name of the parent / parent marriage? " << std::endl;
+		std::cin >> parentName;
+		// at some point, find a way to disambiguate apparent duplicate entries
+		int parentID = getParentID (parentName)[0];
+		node * pParentNode = nodeDirectory[parentID];
+		promptName("What is the name of the new family member / marriage? ", &newNode);
+		insertChild(pParentNode, &newNode);
+		return;
+	}
+	std::cout << "Does this family member have a child node (y/n)? Type q to quit." << std::endl;
+	std::cin >> userAns;
+	if (userAns == 'q')
+		return;
+	else if (userAns == 'n'){
 		promptName ("What is the name of the family member / marriage? ", &newNode);
 		return;
 	}
-	std::string parentName;
-	std::cout << "What is the name of the parent / parent marriage? " << std::endl;
-	std::cin >> parentName;
+	std::string childName;
+	std::cout << "What is the name of the child / child marriage? " << std::endl;
+	std::cin >> childName;
 	// at some point, find a way to disambiguate apparent duplicate entries
-	int parentID = getParentID (parentName)[0];
-	node * pParentNode = nodeDirectory[parentID];
+	int childID = getParentID (childName)[0];
+	node * pChildNode = nodeDirectory[childID];
 	promptName("What is the name of the new family member / marriage? ", &newNode);
-	insertChild(pParentNode, &newNode);
+	insertChild(&newNode, pChildNode);
 	return;
 }
 
