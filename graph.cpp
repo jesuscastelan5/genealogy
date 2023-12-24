@@ -111,7 +111,41 @@ void promptName(std::string prompt, node * newNode){
 
 /*
 	Tested:
-	Description: lets the user create nodes (with or without a parent node) given a user inputted name
+	Description: finds the ID of the most likely node a user is searching for
+	Param: prompt - the question for user,
+	Returns: the nodes' ID
+*/
+int findNodeID (std::string prompt){
+	std::string nodeName;
+	std::cout << prompt << std::endl;
+	std::cin >> nodeName;
+	// at some point, find a way to disambiguate apparent duplicate entries
+	return getNodeID (nodeName)[0];
+}
+
+/*
+	Tested:
+	Description: finds existing node (parent or child),
+		and connects it to a new node
+	Param: prompt - the question for user,
+		mode - 0 corresponds to child,
+			1 corresponds to parent
+*/
+void findNAddNode (std::string prompt, int mode, node * pNewNode){
+	int oldNodeID = findNodeID (prompt);
+	node * pOldNode = nodeDirectory[oldNodeID];
+	promptName("What is the name of the new family member / marriage? ", pNewNode);
+	if (mode == 0)
+		insertChild(pNewNode, pOldNode);
+	else
+		insertChild(pOldNode, pNewNode);
+	return;
+}
+
+
+/*
+	Tested:
+	Description: lets the user create and connect nodes
 	Param:
 */
 void addNodes(){
@@ -125,14 +159,7 @@ void addNodes(){
 	if (userAns == 'q')
 		return
 	else if (userAns == 'y'){
-		std::string parentName;
-		std::cout << "What is the name of the parent / parent marriage? " << std::endl;
-		std::cin >> parentName;
-		// at some point, find a way to disambiguate apparent duplicate entries
-		int parentID = getNodeID (parentName)[0];
-		node * pParentNode = nodeDirectory[parentID];
-		promptName("What is the name of the new family member / marriage? ", &newNode);
-		insertChild(pParentNode, &newNode);
+		findNAddNode ("What is the name of the parent / parent marriage?", 1, &newNode);
 		return;
 	}
 	std::cout << "Does this family member have a child node (y/n)? Type q to quit." << std::endl;
@@ -143,14 +170,8 @@ void addNodes(){
 		promptName ("What is the name of the family member / marriage? ", &newNode);
 		return;
 	}
-	std::string childName;
-	std::cout << "What is the name of the child / child marriage? " << std::endl;
-	std::cin >> childName;
-	// at some point, find a way to disambiguate apparent duplicate entries
-	int childID = getNodeID (childName)[0];
-	node * pChildNode = nodeDirectory[childID];
-	promptName("What is the name of the new family member / marriage? ", &newNode);
-	insertChild(&newNode, pChildNode);
+	int childID = findNodeID ("What is the name of the child / child marriage?")
+	findNAddNode ("What is the name of the child / child marriage?", 0, &newNode);
 	return;
 }
 
