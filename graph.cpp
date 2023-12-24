@@ -114,13 +114,26 @@ void promptName(std::string prompt, node * newNode){
 	Description: finds the ID of the most likely node a user is searching for
 	Param: prompt - the question for user,
 	Returns: the nodes' ID
+		-1 if the user quits from here
 */
 int findNodeID (std::string prompt){
 	std::string nodeName;
 	std::cout << prompt << std::endl;
 	std::cin >> nodeName;
+	if (nodeName == "\quit")
+		return -1;
 	// at some point, find a way to disambiguate apparent duplicate entries
-	return getNodeID (nodeName)[0];
+	possMatches = getNodeID (nodeName)
+	while (possMatches.empty())
+		std::cout << "Sorry, "<< nodeName << " does not exist in the genealogy." << std::endl ;
+		std::cout << prompt << std::endl;
+		std::cin >> nodeName;
+		if (nodeName == "\quit")
+			return -1;
+		// at some point, find a way to disambiguate apparent duplicate entries
+		possMatches = getNodeID (nodeName)
+	
+	return possMatches[0];
 }
 
 /*
@@ -135,6 +148,8 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	extern std::vector<node *> nodeDirectory;
 	
 	int oldNodeID = findNodeID (prompt);
+	if (oldNodeID == -1)
+		return;
 	node * pOldNode = nodeDirectory[oldNodeID];
 	promptName("What is the name of the new family member / marriage? ", pNewNode);
 	if (mode == 0)
@@ -148,7 +163,8 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 /*
 	Tested:
 	Description: lets the user create and connect nodes
-	Param:
+	Param: pNewNode - ptr of a new created node in main()
+		(C/C++ needs globals to be created in main or outside of functions)
 */
 void addNodes(node * pNewNode){
 	extern int globalID;
