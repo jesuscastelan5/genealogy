@@ -188,12 +188,24 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
-	std::string userResp;
+	int userResp;
 
-	std::cout << "Type \quit to quit" << std::endl;
-	
-	while (userResp != "\quit"){
-		addNodes();
+	std::cout << "Type \\quit to quit" << std::endl;
+	std::cout << "What would you like to do?" << std::endl;
+	std::cout << "0 - quit\n" <<
+		"1 - add family members / marriages\n" <<
+		"2 - save genealogy to a file" << std::endl;
+	std::cin >> userResp;
+	while (userResp != 0){
+		if (userResp == 1)
+			addNodes();
+		else if (userResp == 2){
+			std::string fileName;
+			std::cout << "What would you like to call the txt file?" << std::endl;
+			std::cin >> fileName;
+			saveGeneology(fileName);
+		}
+		std::cout << "What would you like to do?" << std::endl;
 		std::cin >> userResp;
 	}
 	
