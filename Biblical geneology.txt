@@ -1,1 +1,4 @@
 0;Terah;1,2,3
+1;Abraham & Hagar;
+2;Abraham & Sarah;
+3;Nahor & Milcah;

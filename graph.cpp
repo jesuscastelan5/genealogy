@@ -154,6 +154,8 @@ void saveGeneology(std::string fileName){
 	
 	std::ofstream myFile;
 	myFile.open(fileName + ".txt");
+	// header
+	myFile << "ID" << ";" << "Name" << ";" << "Children" << std::endl;
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry);
 		myFile << IntToStr(entry->ID) << ";" << entry->name << ";" << childList << std::endl;
