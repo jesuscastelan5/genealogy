@@ -79,7 +79,7 @@ void mergeBranches(node * childNode, int parent1ID, int parent2ID){
 }
 
 /*
-	Tested:
+	Tested: 12/24/2023
 	Description: gives users a list of possible matches to nodeName
 	Param: nodeName - name part of the node
 	Returns: possMatches - list of IDs that potentially match user's query
@@ -96,7 +96,7 @@ std::vector<int> getNodeID (std::string nodeName){
 }
 
 /*
-	Tested:
+	Tested: 12/24/2023
 	Description: prompts user of name of a new node
 	Param: prompt - the question for user
 	Returns: name of the node
@@ -109,7 +109,7 @@ std::string promptName(std::string prompt){
 }
 
 /*
-	Tested:
+	Tested: 12/24/2023
 	Description: finds the ID of the most likely node a user is searching for
 	Param: prompt - the question for user,
 	Returns: the nodes' ID
@@ -133,7 +133,7 @@ int findNodeID (std::string prompt){
 }
 
 /*
-	Tested:
+	Tested: 12/24/2023
 	Description: finds existing node (parent or child),
 		and connects it to a new node
 	Param: prompt - the question for user,
@@ -158,7 +158,7 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 
 
 /*
-	Tested:
+	Tested: 12/24/2023
 	Description: lets the user create and connect nodes
 	Param: pNewNode - ptr of a new created node in main()
 		(C/C++ needs globals to be created in main or outside of functions)
@@ -184,7 +184,54 @@ void addNodes(node * pNewNode){
 		createNode (pNewNode, nodeName);
 		return;
 	}
-	findNAddNode ("What is the name of the child / child marriage? Type \\quit to quit.", 0, pNewNode);
+	findNAddNode ("What is the name of the child / marriage of child? Type \\quit to quit.", 0, pNewNode);
+	return;
+}
+
+/*
+	Tested:
+	Description: prints out the list of child IDs with the row number
+	Param: ListOChildren - list of child IDs
+*/
+void listAllChildren (std::vector<int> ListOChildren){
+	int i = 1;
+	for (auto childID : ListOChildren){
+		node * pChild = nodeDirectory[childID];
+		std::cout << IntToStr(i) << " - "<< pChild->name << std::endl;
+		i++;
+	}
+	return;
+}
+
+
+/*
+	Tested:
+	Description: takes away a child from the list of child IDs from a given parent
+*/
+void disconnectNodes(){
+	extern std::vector <node *> nodeDirectory;
+	
+	int parentID = findNodeID("What is the name of the parent?");
+	node * pParent = nodeDirectory[parentID];
+	std::vector<int> ListOChildren = pParent->childList;
+	
+	std::cout << "Which of these should be disconnected from " << pParent->name << "?" << std::endl;
+	listAllChildren();
+	int userAns;
+	std::cin >> userAns;
+	while (userAns > (ListOChildren.size()) || userAns < 1)
+		std::cout << "That's not a valid answer." << std::endl;
+	
+	if (i == ListOChildren.size()){
+		ListOChildren.pop();
+	}else{
+		for (int i = userAns; i < ListOChildren.size() - 1; i++){
+			ListOChildren [i - 1] = ListOChildren [i];
+		}
+		ListOChildren.pop();
+	}
+	
+	pParent->childList = ListOChildren;
 	return;
 }
 
@@ -229,7 +276,7 @@ void listGenealogy(){
 	std::cout << std::setw(ID_WIDTH) << std::right << "ID";
 	std::cout << " ";
 	std::cout << std::setw(NAME_WIDTH) << std::left << "Name";
-	std::cout << std::setw(CHILD_WIDTH) << std::left << "Children" << std::endl;
+	std::cout << std::setw(CHILD_WIDTH) << std::left << "Child IDs" << std::endl;
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry, ',');
 		
@@ -244,7 +291,7 @@ void listGenealogy(){
 
 
 /*
-	Tested: 12/23/2023
+	Tested: 12/24/2023
 	Description: saves nodes to a (txt/csv) file
 	Param: fileName - name of file
 */
@@ -255,7 +302,7 @@ void saveGenealogy(std::string fileName){
 	std::ofstream myFile;
 	myFile.open(fileName + ".txt");
 	// header
-	myFile << "ID" << colDelimiter << "Name" << colDelimiter << "Children" << std::endl;
+	myFile << "ID" << colDelimiter << "Name" << colDelimiter << "Child IDs" << std::endl;
 	for (auto entry : nodeDirectory){
 		std::string childList = childToList (entry, ',');
 		myFile << IntToStr(entry->ID) << colDelimiter << entry->name << colDelimiter << childList << std::endl;
@@ -275,8 +322,10 @@ int main(){
 	while (userResp != 0){
 		if (userResp == 1){
 			node * pNewNode = new node;
-			addNodes(&newNode);
+			addNodes(pNewNode);
 		}else if (userResp == 2){
+			;
+		}else if (userResp == 3){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::getline(std::cin >> std::ws, fileName);
@@ -285,9 +334,10 @@ int main(){
 			listGenealogy();
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "0 - quit\n" <<
-		"1 - add family members / marriages\n" <<
-		"2 - save genealogy to a file \n" <<
-		"3 - list genealogy to screen" << std::endl;
+		"1 - create family members / marriages\n" <<
+		"2 - connect family members / marriages\n" <<
+		"3 - save genealogy to a file \n" <<
+		"4 - list genealogy to screen" << std::endl;
 		std::cin >> userResp;
 	}
 	
