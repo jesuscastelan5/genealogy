@@ -106,6 +106,8 @@ void addNodes(node * pNewNode){
 	Param: ListOChildren - list of child IDs
 */
 void listAllChildren (std::vector<int> ListOChildren){
+	extern std::vector<node *> nodeDirectory;
+
 	int i = 1;
 	for (auto childID : ListOChildren){
 		node * pChild = nodeDirectory[childID];
@@ -128,13 +130,13 @@ void disconnectNodesPrompt(){
 	std::vector<int> ListOChildren = pParent->childList;
 	
 	std::cout << "Which of these should be disconnected from " << pParent->name << "?" << std::endl;
-	listAllChildren();
+	listAllChildren(ListOChildren);
 	int userAns;
 	std::cin >> userAns;
 	while (userAns > (ListOChildren.size()) || userAns < 1){
 		std::cout << "That's not a valid answer." << std::endl;
 		std::cout << "Which of these should be disconnected from " << pParent->name << "?" << std::endl;
-		listAllChildren();
+		listAllChildren(ListOChildren);
 		std::cin >> userAns;
 	}
 	
@@ -226,6 +228,7 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
+	std::cout << std::endl;
 	int userResp = -1;
 	
 	while (userResp != 0){

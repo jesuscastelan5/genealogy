@@ -114,7 +114,7 @@ void disconnectNodes(node * pParent, int childID){
 	for (int j = i; j < ListOChildren.size() - 1; j++){
 		ListOChildren [j] = ListOChildren [j + 1];
 	}
-	ListOChildren.pop();
+	ListOChildren.pop_back();
 	
 	pParent->childList = ListOChildren;
 	return;
