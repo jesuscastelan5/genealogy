@@ -55,16 +55,27 @@ int findNodeID (std::string prompt){
 void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	extern std::vector<node *> nodeDirectory;
 	
+	int childID;
+	node * pChild;
+	
 	int oldNodeID = findNodeID (prompt);
 	if (oldNodeID == -1)
 		return;
 	node * pOldNode = nodeDirectory[oldNodeID];
-	std::string nodeName = promptName("What is the name of the new family member / marriage?");
-	createNode (pNewNode, nodeName);
-	if (mode == 0)
+	if (mode < 2){
+		std::string nodeName = promptName("What is the name of the new family member / marriage?");
+		createNode (pNewNode, nodeName);
+	}else if (mode == 2){
+		childID = findNodeID ("What is the name of the child member / marriage of child?");
+		if (childID == -1)
+			return;
+		pChild = nodeDirectory[childID];
+	}if (mode == 0)
 		insertChild(pNewNode, pOldNode);
-	else
+	else if (mode == 1)
 		insertChild(pOldNode, pNewNode);
+	else if (mode == 2)
+		insertChild(pOldNode, pChild);
 	return;
 }
 
@@ -76,8 +87,6 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 		(C/C++ needs globals to be created in main or outside of functions)
 */
 void addNodes(node * pNewNode){
-	extern int globalID;
-
 	char userAns;
 	std::cout << "Does this family member have an existing parent node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
@@ -92,13 +101,24 @@ void addNodes(node * pNewNode){
 	if (userAns == 'q')
 		return;
 	else if (userAns == 'n'){
-		std::string nodeName = promptName ("What is the name of the family member / marriage? ");
+		std::string nodeName = promptName ("What is the name of the new family member / marriage? ");
 		createNode (pNewNode, nodeName);
 		return;
 	}
 	findNAddNode ("What is the name of the child / marriage of child? Type \\quit to quit.", 0, pNewNode);
 	return;
 }
+
+
+/*
+	Tested:
+	Description: connects a parent and a child nodes without creating a new node
+*/
+void connectNodes(){
+	findNAddNode ("What is the name of the parent / parent marriage? Type \\quit to quit.", 2, NULL);
+	return;
+}
+
 
 /*
 	Tested:
@@ -228,7 +248,6 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
-	std::cout << std::endl;
 	int userResp = -1;
 	
 	while (userResp != 0){
@@ -237,22 +256,26 @@ int main(){
 			addNodes(pNewNode);
 			if (pNewNode->name == "")
 				delete pNewNode;
-		}else if (userResp == 2){
+		}else if (userResp == 2)
+			connectNodes();
+		else if (userResp == 3)
 			disconnectNodesPrompt();
-		}else if (userResp == 3)
+		else if (userResp == 4)
 			listGenealogy();
-		else if (userResp == 4){
+		else if (userResp == 5){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::getline(std::cin >> std::ws, fileName);
 			saveGenealogy(fileName);
 		}
+		std::cout << std::endl;
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "0 - quit\n" <<
 		"1 - create family members / marriages\n" <<
-		"2 - disconnect family members / marriages\n" <<
-		"3 - list genealogy to screen\n" <<
-		"4 - save genealogy to a file" << std::endl;
+		"2 - connect family members / marriages\n" <<
+		"3 - disconnect family members / marriages\n" <<
+		"4 - list genealogy to screen\n" <<
+		"5 - save genealogy to a file" << std::endl;
 		std::cin >> userResp;
 	}
 	
