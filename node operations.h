@@ -99,19 +99,22 @@ std::vector<int> getNodeID (std::string nodeName){
 	Tested:
 	Description: disconnects the ith child ID from childList of pParent
 	Param: pParent - pointer of parent node
-		userAns - position of child in pParent->childList
+		childID - child ID in pParent->childList
 */
-void disconnectNodes(node * pParent, int userAns){
+void disconnectNodes(node * pParent, int childID){
 	std::vector<int> ListOChildren = pParent->childList;
 	
-	if (userAns == ListOChildren.size() - 1){
-		ListOChildren.pop();
-	}else{
-		for (int i = userAns; i < ListOChildren.size(); i++){
-			ListOChildren [i] = ListOChildren [i + 1];
-		}
-		ListOChildren.pop();
+	if (ListOChildren.empty())
+		return;
+	
+	int i = 0;
+	while (i < ListOChildren.size() && childID != ListOChildren[i])
+		i++;
+	
+	for (int j = i; j < ListOChildren.size() - 1; j++){
+		ListOChildren [j] = ListOChildren [j + 1];
 	}
+	ListOChildren.pop();
 	
 	pParent->childList = ListOChildren;
 	return;

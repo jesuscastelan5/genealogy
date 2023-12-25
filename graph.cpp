@@ -138,7 +138,9 @@ void disconnectNodesPrompt(){
 		std::cin >> userAns;
 	}
 	
-	disconnectNodes(pParent, userAns - 1);
+	int childID = ListOChildren[userAns - 1];
+	
+	disconnectNodes(pParent, childID);
 	return;
 }
 
