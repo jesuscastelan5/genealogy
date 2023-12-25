@@ -221,6 +221,9 @@ void disconnectNodes(){
 	std::cin >> userAns;
 	while (userAns > (ListOChildren.size()) || userAns < 1)
 		std::cout << "That's not a valid answer." << std::endl;
+		std::cout << "Which of these should be disconnected from " << pParent->name << "?" << std::endl;
+		listAllChildren();
+		std::cin >> userAns;
 	
 	if (i == ListOChildren.size()){
 		ListOChildren.pop();
