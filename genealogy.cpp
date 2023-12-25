@@ -56,12 +56,10 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	extern std::vector<node *> nodeDirectory;
 	
 	int childID;
-	node * pChild;
 	
 	int oldNodeID = findNodeID (prompt);
 	if (oldNodeID == -1)
 		return;
-	node * pOldNode = nodeDirectory[oldNodeID];
 	if (mode < 2){
 		std::string nodeName = promptName("What is the name of the new family member / marriage?");
 		createNode (pNewNode, nodeName);
@@ -69,13 +67,12 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 		childID = findNodeID ("What is the name of the child member / marriage of child?");
 		if (childID == -1)
 			return;
-		pChild = nodeDirectory[childID];
 	}if (mode == 0)
-		insertChild(pNewNode, pOldNode);
+		insertChild(pNewNode->ID, oldNodeID);
 	else if (mode == 1)
-		insertChild(pOldNode, pNewNode);
+		insertChild(oldNodeID, pNewNode->ID);
 	else if (mode == 2)
-		insertChild(pOldNode, pChild);
+		insertChild(oldNodeID, childID);
 	return;
 }
 

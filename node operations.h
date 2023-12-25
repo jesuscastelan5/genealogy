@@ -35,8 +35,11 @@ void createNode(node * pThisNode, std::string thisName){
 		Ensures childList stays sorted in ascending order
 	Param: parentNode, childNode
 */
-void insertChild (node * parentNode, node * childNode){
-	int childID = childNode->ID;
+void insertChild (int parentID, int childID){
+	extern std::vector<node *> nodeDirectory;
+	
+	node * parentNode = nodeDirectory[parentID];
+	
 	int i = 0;
 	while (i < parentNode->childList.size() && childID> parentNode->childList[i]){
 		i++;
