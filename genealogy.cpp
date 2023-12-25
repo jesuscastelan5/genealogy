@@ -111,7 +111,7 @@ void addNodes(node * pNewNode){
 
 
 /*
-	Tested:
+	Tested: 12/25/2023
 	Description: connects a parent and a child nodes without creating a new node
 */
 void connectNodes(){
@@ -121,7 +121,7 @@ void connectNodes(){
 
 
 /*
-	Tested:
+	Tested: 12/25/2023
 	Description: prints out the list of child IDs with the row number
 	Param: ListOChildren - list of child IDs
 */
@@ -139,7 +139,7 @@ void listAllChildren (std::vector<int> ListOChildren){
 
 
 /*
-	Tested:
+	Tested: 12/25/2023
 	Description: takes away a child from the list of child IDs from a given parent
 */
 void disconnectNodesPrompt(){

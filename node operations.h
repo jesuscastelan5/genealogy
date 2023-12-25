@@ -96,7 +96,7 @@ std::vector<int> getNodeID (std::string nodeName){
 
 
 /*
-	Tested:
+	Tested: 12/25/2023
 	Description: disconnects the ith child ID from childList of pParent
 	Param: pParent - pointer of parent node
 		childID - child ID in pParent->childList
