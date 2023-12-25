@@ -222,6 +222,21 @@ void listGenealogy(){
 
 
 /*
+	Tested:
+	Description: deletes and releases all nodes and clears all elements from nodeDirectory
+*/
+void deleteAllNodes(){
+	extern std::vector<node *> nodeDirectory;
+	for (int i = nodeDirectory.size() - 1; i > -1; i--){
+		node * pThisNode = nodeDirectory[i];
+		delete pThisNode;
+		nodeDirectory.pop_back();
+	}
+	return;
+}
+
+
+/*
 	Tested: 12/24/2023
 	Description: saves nodes to a (txt/csv) file
 	Param: fileName - name of file
