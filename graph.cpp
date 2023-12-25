@@ -206,9 +206,33 @@ void listAllChildren (std::vector<int> ListOChildren){
 
 /*
 	Tested:
+	Description: disconnects the ith + 1 child ID from childList of pParent
+	Param: pParent - pointer of parent node
+		userAns - position (from index = 1) 
+			of child in pParent->childList
+*/
+void disconnectNodes(node * pParent, int userAns){
+	std::vector<int> ListOChildren = pParent->childList;
+	
+	if (userAns == ListOChildren.size()){
+		ListOChildren.pop();
+	}else{
+		for (int i = userAns; i < ListOChildren.size() - 1; i++){
+			ListOChildren [i - 1] = ListOChildren [i];
+		}
+		ListOChildren.pop();
+	}
+	
+	pParent->childList = ListOChildren;
+	return;
+}
+
+
+/*
+	Tested:
 	Description: takes away a child from the list of child IDs from a given parent
 */
-void disconnectNodes(){
+void disconnectNodesPrompt(){
 	extern std::vector <node *> nodeDirectory;
 	
 	int parentID = findNodeID("What is the name of the parent?");
@@ -219,22 +243,14 @@ void disconnectNodes(){
 	listAllChildren();
 	int userAns;
 	std::cin >> userAns;
-	while (userAns > (ListOChildren.size()) || userAns < 1)
+	while (userAns > (ListOChildren.size()) || userAns < 1){
 		std::cout << "That's not a valid answer." << std::endl;
 		std::cout << "Which of these should be disconnected from " << pParent->name << "?" << std::endl;
 		listAllChildren();
 		std::cin >> userAns;
-	
-	if (i == ListOChildren.size()){
-		ListOChildren.pop();
-	}else{
-		for (int i = userAns; i < ListOChildren.size() - 1; i++){
-			ListOChildren [i - 1] = ListOChildren [i];
-		}
-		ListOChildren.pop();
 	}
 	
-	pParent->childList = ListOChildren;
+	disconnectNodes(pParent, userAns);
 	return;
 }
 
@@ -329,7 +345,7 @@ int main(){
 			if (pNewNode->name == "")
 				delete pNewNode;
 		}else if (userResp == 2){
-			disconnectNodes();
+			disconnectNodesPrompt();
 		}else if (userResp == 3)
 			listGenealogy();
 		else if (userResp == 4){
