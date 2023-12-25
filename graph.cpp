@@ -323,21 +323,24 @@ int main(){
 		if (userResp == 1){
 			node * pNewNode = new node;
 			addNodes(pNewNode);
+			if (pNewNode->name == "")
+				delete pNewNode;
 		}else if (userResp == 2){
-			;
-		}else if (userResp == 3){
+			disconnectNodes();
+		}else if (userResp == 3)
+			listGenealogy();
+		else if (userResp == 4){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::getline(std::cin >> std::ws, fileName);
 			saveGenealogy(fileName);
-		}else if (userResp == 3)
-			listGenealogy();
+		}
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "0 - quit\n" <<
 		"1 - create family members / marriages\n" <<
-		"2 - connect family members / marriages\n" <<
-		"3 - save genealogy to a file \n" <<
-		"4 - list genealogy to screen" << std::endl;
+		"2 - disconnect family members / marriages\n" <<
+		"3 - list genealogy to screen\n" <<
+		"4 - save genealogy to a file" << std::endl;
 		std::cin >> userResp;
 	}
 	
