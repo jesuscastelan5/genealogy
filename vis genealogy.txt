@@ -76,26 +76,108 @@ Jacob
 |\
 | Isaac
 |      \
-|       Abraham & Sarah
 |       \
-Rebecca  \  
-|         \
+|        \
+Rebecca   \  
 |          \
 |           \
 |            \
 |             \
-|        Leah  \
-|        |      \
-| Rachel |       \
-| \      |        \
- \ \     |         \
-  \ \    |          \
-   \ \   |           \
-    \ \  |            \
-	 \ \ |             \
+|              \
+|        Leah   \
+|        |       \
+| Rachel |        \
+| \      |         \
+ \ \     |          \
+  \ \    |           \
+   \ \   |            \
+    \ \  |             \
+	 \ \ |              Abraham & Sarah
 	  \ \|              |
-	   \ |              |
+	   \ Laban          |
 	    \|              |
+         Nahor & Milcah |
+         \              |
+          \             |
+           \            |
+            \           |
+             \          |
+	          \         |
+	           \        |
+	            \       |
+	             \      |
+		          \     |
+		           \    |
+		            \   |
+                     \  |
+		              \ |
+			           \|
+			            |
+			            |
+Abraham & Hagar         |
+\                       |
+ \			            |
+  \			            |
+   \			        |
+    \		    	    |
+	 \		        	|
+	  \                 |
+	   \		        |
+	    \               |
+		 \              |
+		  \             |
+		   \            |
+		    \           |
+			 \          |
+			  \         |
+			   \        |
+			    \       |
+				 \      |
+				  \     |
+				   \    |
+				    \   |
+					 \  |
+					  \ |
+					   \|
+				        Terah
+						
+idea # 4 leaves at the left most column
+
+Jacob
+|\
+| Isaac
+|      \
+|       \
+|        \
+Rebecca   \  
+\          \
+ \          \
+  \          \
+   \          \
+    \          \
+Leah \          \
+\     \          \
+ \     \          \
+  \     \          \
+   \     \          \
+    \     \          \
+	 \     \          \
+	  \     \          \
+	   \     \          |
+	   |      \         |
+	   |       \        |
+	   |        \       |
+	   |         \      |
+Rachel |          \     |
+\      |           \    |
+ \     |            \   |
+  \    |             \  |
+   \   |              \ |
+    \  |               \|
+	 \ |                Abraham & Sarah
+	  \|                |
+	   Laban            |
+	    \               |
          Nahor & Milcah |
          \              |
           \             |
