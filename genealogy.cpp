@@ -91,9 +91,11 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2, int mode){
 	char userAns;
 	
-	std::cout << prompt1 << std::endl;
-	std::cin >> userAns;
 	do{
+		userAns = '\0';
+		std::cout << prompt1 << std::endl;
+		std::cin >> userAns;
+		
 		if (userAns == 'q')
 			return 'q';
 		else if (userAns == 'y'){
@@ -101,9 +103,8 @@ char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2,
 			return 'y';
 		}else if (userAns == 'n')
 			return 'n';
-		std::cout << "Sorry, that's not a valid answer." << std::endl;
-		std::cout << prompt1 << std::endl;
-		std::cin >> userAns;
+		std::cout << "\nSorry, that's not a valid answer.\n" << std::endl;
+
 	}while (1 == 1);
 }
 
@@ -118,13 +119,13 @@ void addNodes(node * pNewNode){
 	char userAns;
 	
 	userAns = addNodesPrompts (pNewNode, "Does this family member have an existing parent node (y/n)? Type q to quit.",
-		"What is the name of the parent / parent marriage? Type \\quit to quit.", 1)
+		"What is the name of the parent / parent marriage? Type \\quit to quit.", 1);
 	
 	if (userAns != 'n')
 		return;
 	
 	userAns = addNodesPrompts (pNewNode, "Does this family member have an existing child node (y/n)? Type q to quit.",
-		"What is the name of the child / marriage of child? Type \\quit to quit.", 0)
+		"What is the name of the child / marriage of child? Type \\quit to quit.", 0);
 	
 	if (userAns != 'n')
 		return;
