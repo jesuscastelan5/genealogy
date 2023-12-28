@@ -60,7 +60,13 @@ std::string findDigits (int n, std::string retStr, int prevPower){
 	return retStr;
 }
 
-
+/*
+	Tested: 12/17/2023
+	Description: converts a positive integer from 0 to ... into a string
+		Could not get std::to_string to work for some reason
+	Param: n - integer to convert
+	Returns: retStr - string form of n
+*/
 std::string IntToStr(int n) {
 	
 	std::string retStr;

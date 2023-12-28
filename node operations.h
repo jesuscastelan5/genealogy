@@ -33,6 +33,9 @@ void createNode(node * pThisNode, std::string thisName){
 	Tested: 12/23/2023
 	Description: adds child ID to childList for parentNode
 		Ensures childList stays sorted in ascending order
+		does this indirectly by using the nodeDirectory
+		rather than using the raw pointers
+		figured it'd be safer
 	Param: parentNode, childNode
 */
 void insertChild (int parentID, int childID){
@@ -63,19 +66,11 @@ void insertChild (int parentID, int childID){
 /*
 	Tested:
 	Description: adds child ID to childList for two parent nodes
-		does this indirectly by using the nodeDirectory
-		rather than using the raw pointers
-		figured it'd be safer
 	Param: childNode, parent1ID, parent2ID
 */
-void mergeBranches(node * childNode, int parent1ID, int parent2ID){
-	extern std::vector<node *> nodeDirectory;
-
-	node * pParent1 = nodeDirectory[parent1ID];
-	node * pParent2 = nodeDirectory[parent2ID];
-
-	insertChild (pParent1, childNode);
-	insertChild (pParent2, childNode);
+void mergeBranches(int childID, int parent1ID, int parent2ID){
+	insertChild (parent1ID, childID);
+	insertChild (parent2ID, childID);
 	return;
 }
 

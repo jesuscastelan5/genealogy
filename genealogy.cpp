@@ -87,20 +87,24 @@ void addNodes(node * pNewNode){
 	char userAns;
 	std::cout << "Does this family member have an existing parent node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
-	if (userAns == 'q')
-		return;
-	else if (userAns == 'y'){
-		findNAddNode ("What is the name of the parent / parent marriage? Type \\quit to quit.", 1, pNewNode);
-		return;
+	while (userAns != 'q' && userAns != 'y' && userAns != 'n'){
+		if (userAns == 'q')
+			return;
+		else if (userAns == 'y'){
+			findNAddNode ("What is the name of the parent / parent marriage? Type \\quit to quit.", 1, pNewNode);
+			return;
+		}
 	}
 	std::cout << "Does this family member have an existing child node (y/n)? Type q to quit." << std::endl;
 	std::cin >> userAns;
-	if (userAns == 'q')
-		return;
-	else if (userAns == 'n'){
-		std::string nodeName = promptName ("What is the name of the new family member / marriage? ");
-		createNode (pNewNode, nodeName);
-		return;
+	while (userAns != 'q' && userAns != 'y' && userAns != 'n'){
+		if (userAns == 'q')
+			return;
+		else if (userAns == 'n'){
+			std::string nodeName = promptName ("What is the name of the new family member / marriage? ");
+			createNode (pNewNode, nodeName);
+			return;
+		}
 	}
 	findNAddNode ("What is the name of the child / marriage of child? Type \\quit to quit.", 0, pNewNode);
 	return;
@@ -219,16 +223,20 @@ void listGenealogy(){
 
 
 /*
-	Tested:
+	Tested: 12/27/2023
 	Description: deletes and releases all nodes and clears all elements from nodeDirectory
 */
 void deleteAllNodes(){
 	extern std::vector<node *> nodeDirectory;
+	extern int globalID;
+	
 	for (int i = nodeDirectory.size() - 1; i > -1; i--){
 		node * pThisNode = nodeDirectory[i];
 		delete pThisNode;
 		nodeDirectory.pop_back();
 	}
+	
+	globalID = 0;
 	return;
 }
 
@@ -273,8 +281,10 @@ int main(){
 		else if (userResp == 3)
 			disconnectNodesPrompt();
 		else if (userResp == 4)
+			deleteAllNodes();
+		else if (userResp == 5)
 			listGenealogy();
-		else if (userResp == 5){
+		else if (userResp == 6){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::getline(std::cin >> std::ws, fileName);
@@ -286,8 +296,9 @@ int main(){
 		"1 - create family members / marriages\n" <<
 		"2 - connect family members / marriages\n" <<
 		"3 - disconnect family members / marriages\n" <<
-		"4 - list genealogy to screen\n" <<
-		"5 - save genealogy to a file" << std::endl;
+		"4 - delete all family members / marriages\n" <<
+		"5 - list genealogy to screen\n" <<
+		"6 - save genealogy to a file" << std::endl;
 		std::cin >> userResp;
 	}
 	
