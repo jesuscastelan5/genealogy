@@ -78,6 +78,37 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 
 
 /*
+	Tested:
+	Description: to be used with addNodes, takes away the repetitiveness of that subroutine
+		ensures user puts a valid answer to prompts
+	Param:
+		pNewNode - new node for findNAddNode, used if user answers 'y' to prompt1
+		prompt1 - first question for user
+		prompt2 - second question for user if the user answers 'y' to prompt1
+		mode - mode for findNAddNode
+	Returns: 'q' if the user wants to quit, 'y' or 'n' as an answer to prompt1
+*/
+char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2, int mode){
+	char userAns;
+	
+	std::cout << prompt1 << std::endl;
+	std::cin >> userAns;
+	do{
+		if (userAns == 'q')
+			return 'q';
+		else if (userAns == 'y'){
+			findNAddNode (prompt2, mode, pNewNode);
+			return 'y';
+		}else if (userAns == 'n')
+			return 'n';
+		std::cout << "Sorry, that's not a valid answer." << std::endl;
+		std::cout << prompt1 << std::endl;
+		std::cin >> userAns;
+	}while (1 == 1);
+}
+
+
+/*
 	Tested: 12/24/2023
 	Description: lets the user create and connect nodes
 	Param: pNewNode - ptr of a new created node in main()
@@ -85,28 +116,21 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 */
 void addNodes(node * pNewNode){
 	char userAns;
-	std::cout << "Does this family member have an existing parent node (y/n)? Type q to quit." << std::endl;
-	std::cin >> userAns;
-	while (userAns != 'q' && userAns != 'y' && userAns != 'n'){
-		if (userAns == 'q')
-			return;
-		else if (userAns == 'y'){
-			findNAddNode ("What is the name of the parent / parent marriage? Type \\quit to quit.", 1, pNewNode);
-			return;
-		}
-	}
-	std::cout << "Does this family member have an existing child node (y/n)? Type q to quit." << std::endl;
-	std::cin >> userAns;
-	while (userAns != 'q' && userAns != 'y' && userAns != 'n'){
-		if (userAns == 'q')
-			return;
-		else if (userAns == 'n'){
-			std::string nodeName = promptName ("What is the name of the new family member / marriage? ");
-			createNode (pNewNode, nodeName);
-			return;
-		}
-	}
-	findNAddNode ("What is the name of the child / marriage of child? Type \\quit to quit.", 0, pNewNode);
+	
+	userAns = addNodesPrompts (pNewNode, "Does this family member have an existing parent node (y/n)? Type q to quit.",
+		"What is the name of the parent / parent marriage? Type \\quit to quit.", 1)
+	
+	if (userAns != 'n')
+		return;
+	
+	userAns = addNodesPrompts (pNewNode, "Does this family member have an existing child node (y/n)? Type q to quit.",
+		"What is the name of the child / marriage of child? Type \\quit to quit.", 0)
+	
+	if (userAns != 'n')
+		return;
+	
+	std::string nodeName = promptName ("What is the name of the new family member / marriage?");
+	createNode (pNewNode, nodeName);
 	return;
 }
 
@@ -225,6 +249,7 @@ void listGenealogy(){
 /*
 	Tested: 12/27/2023
 	Description: deletes and releases all nodes and clears all elements from nodeDirectory
+		resets globalID to 0
 */
 void deleteAllNodes(){
 	extern std::vector<node *> nodeDirectory;
