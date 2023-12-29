@@ -27,10 +27,11 @@ std::vector<std::string> SplitStr(std::string yourStr, char delim){
 
 
 /*
-	Tested: 12/17/2023
+	Tested: 12/28/2023
 	Description: recursive loop to find digits of integer
 		will push_back 0s if there is a gap of digits
 		e.g. 10004, 1000006007, 1002, etc 
+		ensures numbers ending with 0s will get those 0s in the string
 	Param: n - integer to convert to string
 		retStr - string with digits
 		prevPower - power of the last digit found, used to find gaps in digits
@@ -61,7 +62,7 @@ std::string findDigits (int n, std::string retStr, int prevPower){
 }
 
 /*
-	Tested: 12/17/2023
+	Tested: 12/28/2023
 	Description: converts a positive integer from 0 to ... into a string
 		Ensures 0 does not go to findDigits
 		Could not get std::to_string to work for some reason, thus leading to this function

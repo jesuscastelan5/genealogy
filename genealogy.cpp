@@ -81,6 +81,7 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	Tested:
 	Description: to be used with addNodes, takes away the repetitiveness of that subroutine
 		ensures user puts a valid answer to prompts
+		userAns is a string so we don't have to worry about flushing the input buffer
 	Param:
 		pNewNode - new node for findNAddNode, used if user answers 'y' to prompt1
 		prompt1 - first question for user
@@ -89,19 +90,18 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	Returns: 'q' if the user wants to quit, 'y' or 'n' as an answer to prompt1
 */
 char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2, int mode){
-	char userAns;
+	std::string userAns;
 	
 	do{
-		userAns = '\0';
 		std::cout << prompt1 << std::endl;
 		std::cin >> userAns;
 		
-		if (userAns == 'q')
+		if (userAns == "q")
 			return 'q';
-		else if (userAns == 'y'){
+		else if (userAns == "y"){
 			findNAddNode (prompt2, mode, pNewNode);
 			return 'y';
-		}else if (userAns == 'n')
+		}else if (userAns == "n")
 			return 'n';
 		std::cout << "\nSorry, that's not a valid answer.\n" << std::endl;
 
