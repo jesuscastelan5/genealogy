@@ -37,7 +37,7 @@ std::vector<std::string> SplitStr(std::string yourStr, char delim){
 	Returns: int in string format
 */
 std::string findDigits (int n, std::string retStr, int prevPower){
-	if (n < 1)
+	if (prevPower == 0)
 		return retStr;
 	
 	int power = 0;
@@ -63,14 +63,15 @@ std::string findDigits (int n, std::string retStr, int prevPower){
 /*
 	Tested: 12/17/2023
 	Description: converts a positive integer from 0 to ... into a string
-		Could not get std::to_string to work for some reason
+		Ensures 0 does not go to findDigits
+		Could not get std::to_string to work for some reason, thus leading to this function
 	Param: n - integer to convert
 	Returns: retStr - string form of n
 */
 std::string IntToStr(int n) {
 	
 	std::string retStr;
-	int prevPower = 0;
+	int prevPower = -1;
 	
 	if (n == 0){
 		retStr.push_back('0');

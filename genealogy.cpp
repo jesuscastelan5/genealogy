@@ -323,7 +323,7 @@ int main(){
 		"2 - connect family members / marriages\n" <<
 		"3 - disconnect family members / marriages\n" <<
 		"4 - delete all family members / marriages\n" <<
-		"5 - list genealogy to screen\n" <<
+		"5 - list genealogy members to screen\n" <<
 		"6 - save genealogy to a file" << std::endl;
 		std::cin >> userResp;
 	}
