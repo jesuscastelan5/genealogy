@@ -393,7 +393,7 @@ void loadGenealogy(){
 	std::string fileName;
 	do{
 		std::cout << "What is the name of the CSV file?" << std::endl;
-		std::cin >> fileName;
+		std::getline(std::cin >> std::ws, fileName);
 		
 		if (capitalize(fileName) == "\\QUIT")
 			return;
