@@ -96,12 +96,12 @@ char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2,
 		std::cout << prompt1 << std::endl;
 		std::cin >> userAns;
 		
-		if (userAns == "q")
+		if (userAns == "q" || userAns == "Q" )
 			return 'q';
-		else if (userAns == "y"){
+		else if (userAns == "y" || userAns == "Y" ){
 			findNAddNode (prompt2, mode, pNewNode);
 			return 'y';
-		}else if (userAns == "n")
+		}else if (userAns == "n" || userAns == "N" )
 			return 'n';
 		std::cout << "\nSorry, that's not a valid answer.\n" << std::endl;
 
@@ -290,6 +290,105 @@ void saveGenealogy(std::string fileName){
 }
 
 
+/*
+	Tested:
+	Description:
+		Assumes deleteAllNodes() was called prior to use
+		If IDs from file are in a strange order 
+		(e.g. 0, 5, 3, 1, 2 or 100, 5, 2, 8),
+		it will respect those IDs to maintain referencial integrity to children.
+	Param: vector of CSV rows
+*/
+void CSVToNodes(std::vector<fileRow> genCSV){
+	extern std::vector<node *> nodeDirectory;
+	extern int globalID;
+	
+	for (auto row : genCSV){
+		node * pThisNode = new node;
+		pThisNode->ID = row.memberID ;
+		pThisNode->name = row.memberName;
+		std::vector<std::string> StringIDs = SplitStr (row.memberChildren, ',');
+		std::vector <int> IntIDs;
+		for (auto SID : StringIDs)
+			IntIDs.push_back(stoi(SID));
+		pThisNode->childList = IntIDs;
+		if (row.memberID > globalID){
+			for (int i = globalID; i < row.memberID; i++)
+				nodeDirectory.push_back(NULL);
+			globalID = nodeDirectory.size();
+		}else if (row.memberID < globalID){
+			nodeDirectory[row.memberID] = pThisNode;
+		}
+		nodeDirectory.push_back(pThisNode);
+		globalID++;
+	}
+	
+	return;
+}
+
+
+
+/*
+	Tested:
+	Description:
+	Param:
+	Returns:
+*/
+void readGenealogy(){
+	deleteAllNodes();
+	std::string fileName;
+	
+	std::cout << "What is the name of the CSV file?" << std::endl;
+	std::cin >> fileName;
+	
+	fileName = fileName + ".csv";
+	std::vector<fileRow> genCSV = readGenealogyCSV (fileName);
+	if (genCSV.empty()){
+		std::cout << "Warning: " << fileName << " does not exist, is empty, or is formatted incorrectly." << std::endl;
+		std::cout << "Make sure the columns are separated by semicolons like so:" std::endl;
+		std::cout << "0;Abraham;1" std::endl;
+		std::cout << "1;Isaac;2" std::endl;
+		std::cout << "2;Jacob;" std::endl;
+		return;
+	}
+	
+	CSVToNodes(genCSV);
+	
+	return;
+}
+
+
+/*
+	Tested:
+	Description:
+	Param:
+	Returns:
+*/
+void readGenealogyPrompt(){
+	extern std::vector<node *> nodeDirectory;
+	if (!nodeDirectory.empty()){
+		std::string userAns;
+		std::cout << "Warning: ";
+		do{
+			std::cout << "this will delete your current genealogy.  Do you want to proceed? (y/n)" << std::endl;
+			std::cin >> userAns;
+			if (userAns == "q" || userAns == "Q")
+				return;
+			else if (userAns == "n" || userAns == "N")
+				return;
+			else if (userAns == "y" || userAns == "Y"){
+				readGenealogy();
+				return;
+			}
+			std::cout << "That's not a valid answer" << std::endl;
+		}while (1 == 1)
+	}else
+		readGenealogy();
+	return;
+}
+
+
+
 std::vector<node *> nodeDirectory;
 int globalID = 0;
 
@@ -305,12 +404,14 @@ int main(){
 		}else if (userResp == 2)
 			connectNodes();
 		else if (userResp == 3)
-			disconnectNodesPrompt();
+			readGenealogyPrompt();
 		else if (userResp == 4)
-			deleteAllNodes();
+			disconnectNodesPrompt();
 		else if (userResp == 5)
+			deleteAllNodes();
+		else if (userResp == 6)
 			listGenealogy();
-		else if (userResp == 6){
+		else if (userResp == 7){
 			std::string fileName;
 			std::cout << "What would you like to call the txt file?" << std::endl;
 			std::getline(std::cin >> std::ws, fileName);
@@ -321,10 +422,11 @@ int main(){
 		std::cout << "0 - quit\n" <<
 		"1 - create family members / marriages\n" <<
 		"2 - connect family members / marriages\n" <<
-		"3 - disconnect family members / marriages\n" <<
-		"4 - delete all family members / marriages\n" <<
-		"5 - list genealogy members to screen\n" <<
-		"6 - save genealogy to a file" << std::endl;
+		"3 - load existing genealogy\n"
+		"4 - disconnect family members / marriages\n" <<
+		"5 - delete all family members / marriages\n" <<
+		"6 - list genealogy members to screen\n" <<
+		"7 - save genealogy to a file" << std::endl;
 		std::cin >> userResp;
 	}
 	
