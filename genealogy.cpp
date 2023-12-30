@@ -236,6 +236,8 @@ void listGenealogy(){
 	std::cout << std::setw(NAME_WIDTH) << std::left << "Name";
 	std::cout << std::setw(CHILD_WIDTH) << std::left << "Child IDs" << std::endl;
 	for (auto entry : nodeDirectory){
+		if (entry == NULL)
+			continue;
 		std::string childList = childToList (entry, ',');
 		
 		std::cout << std::setw(ID_WIDTH) << std::right << IntToStr(entry->ID);
@@ -282,6 +284,8 @@ void saveGenealogy(std::string fileName){
 	// header
 	myFile << "ID" << colDelimiter << "Name" << colDelimiter << "Child IDs" << std::endl;
 	for (auto entry : nodeDirectory){
+		if (entry == NULL)
+			continue;
 		std::string childList = childToList (entry, ',');
 		myFile << IntToStr(entry->ID) << colDelimiter << entry->name << colDelimiter << childList << std::endl;
 	}
@@ -319,11 +323,14 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 			for (int i = globalID; i < row.memberID; i++)
 				nodeDirectory.push_back(NULL);
 			globalID = nodeDirectory.size();
+			nodeDirectory.push_back(pThisNode);
+			globalID++;
 		}else if (row.memberID < globalID){
 			nodeDirectory[row.memberID] = pThisNode;
+		}else{
+			nodeDirectory.push_back(pThisNode);
+			globalID++;
 		}
-		nodeDirectory.push_back(pThisNode);
-		globalID++;
 	}
 	
 	return;
