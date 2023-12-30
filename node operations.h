@@ -1,3 +1,4 @@
+# include <iostream>
 # include <vector>
 # include <string>
 
@@ -49,6 +50,10 @@ void insertChild (int parentID, int childID){
 	}
 	if (i == parentNode->childList.size()){
 		parentNode->childList.push_back(childID);
+		return;
+	}
+	if (childID == parentNode->childList[i]){
+		std::cout << "Warning: child / marriage of child was already added" << std::endl;
 		return;
 	}
 	
