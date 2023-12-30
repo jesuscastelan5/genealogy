@@ -3,8 +3,9 @@
 # include <string>
 # include <fstream>
 # include <iomanip>
-# include "string tools.h"
+//# include "string tools.h"
 # include "node operations.h"
+# include "loadGenealogy.h"
 
 
 /*
@@ -291,7 +292,7 @@ void saveGenealogy(std::string fileName){
 
 
 /*
-	Tested:
+	Tested: 12/29/2023
 	Description:
 		Assumes deleteAllNodes() was called prior to use
 		If IDs from file are in a strange order 
@@ -309,8 +310,10 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 		pThisNode->name = row.memberName;
 		std::vector<std::string> StringIDs = SplitStr (row.memberChildren, ',');
 		std::vector <int> IntIDs;
-		for (auto SID : StringIDs)
-			IntIDs.push_back(stoi(SID));
+		if (!(StringIDs.empty())){
+			for (auto SID : StringIDs)
+				IntIDs.push_back(std::stoi(SID));
+		}
 		pThisNode->childList = IntIDs;
 		if (row.memberID > globalID){
 			for (int i = globalID; i < row.memberID; i++)
@@ -345,10 +348,10 @@ void readGenealogy(){
 	std::vector<fileRow> genCSV = readGenealogyCSV (fileName);
 	if (genCSV.empty()){
 		std::cout << "Warning: " << fileName << " does not exist, is empty, or is formatted incorrectly." << std::endl;
-		std::cout << "Make sure the columns are separated by semicolons like so:" std::endl;
-		std::cout << "0;Abraham;1" std::endl;
-		std::cout << "1;Isaac;2" std::endl;
-		std::cout << "2;Jacob;" std::endl;
+		std::cout << "Make sure the columns are separated by semicolons like so:" << std::endl;
+		std::cout << "0;Abraham;1" << std::endl;
+		std::cout << "1;Isaac;2" << std::endl;
+		std::cout << "2;Jacob;" << std::endl;
 		return;
 	}
 	
@@ -381,7 +384,7 @@ void readGenealogyPrompt(){
 				return;
 			}
 			std::cout << "That's not a valid answer" << std::endl;
-		}while (1 == 1)
+		}while (1 == 1);
 	}else
 		readGenealogy();
 	return;

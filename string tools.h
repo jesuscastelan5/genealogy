@@ -3,7 +3,7 @@
 # include <cmath>
 
 /*
-    Tested: 10/22/2023 (jcastelan5)
+    Tested: 12/29/2023 (jcastelan5)
     Purpose: splits a string by a given delimiter
     Param: 
     Returns: vector of strings split by delimiter
@@ -20,7 +20,8 @@ std::vector<std::string> SplitStr(std::string yourStr, char delim){
     }
   }
   // for final split
-  splitStr.push_back(tempStr);
+  if (tempStr != "")
+	splitStr.push_back(tempStr);
   return splitStr;
 }
 
