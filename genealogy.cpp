@@ -3,7 +3,6 @@
 # include <string>
 # include <fstream>
 # include <iomanip>
-//# include "string tools.h"
 # include "node operations.h"
 # include "loadGenealogy.h"
 
@@ -275,7 +274,11 @@ void deleteAllNodes(){
 }
 
 
-/**/
+/*
+	Tested:
+	Description: warns user that current genealogy will be deleted
+		if a genealogy is detected
+*/
 void deleteAllNodesPrompt(){
 	extern std::vector<node *> nodeDirectory;
 	
