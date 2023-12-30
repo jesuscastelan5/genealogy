@@ -279,6 +279,13 @@ void saveGenealogy(std::string fileName){
 	extern std::vector<node *> nodeDirectory;
 	std::string colDelimiter = ";";
 	
+	std::string fileName;
+	std::cout << "What would you like to call the txt file? (Type \\quit to quit)" << std::endl;
+	std::getline(std::cin >> std::ws, fileName);
+	
+	if (fileName == "\\quit" || fileName == "\\QUIT")
+		return;
+	
 	std::ofstream myFile;
 	myFile.open(fileName + ".txt");
 	// header
@@ -422,9 +429,6 @@ int main(){
 		else if (userResp == 6)
 			listGenealogy();
 		else if (userResp == 7){
-			std::string fileName;
-			std::cout << "What would you like to call the txt file?" << std::endl;
-			std::getline(std::cin >> std::ws, fileName);
 			saveGenealogy(fileName);
 		}
 		std::cout << std::endl;
