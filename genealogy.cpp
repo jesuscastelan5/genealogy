@@ -308,9 +308,8 @@ void deleteAllNodesPrompt(){
 /*
 	Tested: 12/24/2023
 	Description: saves nodes to a (txt/csv) file
-	Param: fileName - name of file
 */
-void saveGenealogy(std::string fileName){
+void saveGenealogy(){
 	extern std::vector<node *> nodeDirectory;
 	std::string colDelimiter = ";";
 	
@@ -388,7 +387,6 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 */
 void readGenealogy(){
 	extern std::vector<node *> nodeDirectory;
-	std::vector<fileRow> genCSV;
 	
 	deleteAllNodesPrompt();
 	if (!(nodeDirectory.empty()))
@@ -443,7 +441,7 @@ int main(){
 		else if (userResp == 6)
 			listGenealogy();
 		else if (userResp == 7){
-			saveGenealogy(fileName);
+			saveGenealogy();
 		}
 		std::cout << std::endl;
 		std::cout << "What would you like to do?" << std::endl;
