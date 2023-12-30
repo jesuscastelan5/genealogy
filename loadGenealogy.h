@@ -15,6 +15,7 @@ typedef struct{
 	Description: reads CSV with a delimiter of ';'
 		if file with name of fileName doesn't exist,
 		it will return an empty vector of rowsRead
+		will ignore header
 	Param: fileName
 	Returns: contents of CSV file
 */
@@ -35,7 +36,9 @@ std::vector <fileRow> readGenealogyCSV (std::string fileName){
 		if (dividedString.size() == 1){
 			std::vector <fileRow> emptyVector;
 			return emptyVector;
-		}else{
+		}else if (dividedString[0] == "ID")
+			continue;
+		else{
 			thisRow.memberID = std::stoi (dividedString[0]);
 			thisRow.memberName = dividedString[1];
 			if (dividedString.size()>2)
