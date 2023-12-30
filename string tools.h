@@ -1,6 +1,30 @@
 # include <vector>
 # include <string>
 # include <cmath>
+# define TRUE 1
+# define FALSE 0
+
+/*
+	Tested:
+	Purpose:
+	Param:
+	Returns: boolean
+		TRUE if the entire string is an integer
+		FALSE otherwise
+*/
+int IsInt (std::string yourStr) {
+	if (yourStr.empty())
+		return FALSE;
+	
+	for (auto thisChar : yourStr){
+		int thisCharASCII = (int)thisChar;
+		if (thisCharASCII < 48 || thisCharASCII > 57)
+			return FALSE;
+	}
+	
+	return TRUE;
+}
+
 
 /*
     Tested: 12/30/2023 (jcastelan5)

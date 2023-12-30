@@ -420,9 +420,10 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
-	int userAns = -1;
-	
-	while (userAns != 0){
+	std::string userAnsStr = "";
+	do{
+		int userAns = -1;
+		
 		if (userAns == 1){
 			node * pNewNode = new node;
 			addNodes(pNewNode);
@@ -441,6 +442,12 @@ int main(){
 		else if (userAns == 7){
 			deleteAllNodesPrompt();
 		}
+		
+		if (!(userAnsStr.empty())){
+			std::cout << std::endl;
+			std::cout << "That's not a correct answer" << std::endl;
+		}
+		
 		std::cout << std::endl;
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "0 - quit\n" <<
@@ -451,8 +458,10 @@ int main(){
 		"5 - list genealogy members to screen\n\n" <<
 		"6 - disconnect family members / marriages\n" <<
 		"7 - delete all family members / marriages\n" << std::endl;
-		std::cin >> userAns;
-	}
+		std::cin >> userAnsStr;
+		if (IsInt (userAnsStr))
+			userAns = std::stoi(userAnsStr);
+	}while (userAns != 0);
 	
 	return 0;
 }
