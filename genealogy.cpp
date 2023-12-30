@@ -420,25 +420,25 @@ std::vector<node *> nodeDirectory;
 int globalID = 0;
 
 int main(){
-	int userResp = -1;
+	int userAns = -1;
 	
-	while (userResp != 0){
-		if (userResp == 1){
+	while (userAns != 0){
+		if (userAns == 1){
 			node * pNewNode = new node;
 			addNodes(pNewNode);
 			if (pNewNode->name == "")
 				delete pNewNode;
-		}else if (userResp == 2)
+		}else if (userAns == 2)
 			connectNodes();
-		else if (userResp == 3)
+		else if (userAns == 3)
 			loadGenealogy();
-		else if (userResp == 4)
+		else if (userAns == 4)
 			saveGenealogy();
-		else if (userResp == 5)
+		else if (userAns == 5)
 			listGenealogy();
-		else if (userResp == 6)
+		else if (userAns == 6)
 			disconnectNodesPrompt();
-		else if (userResp == 7){
+		else if (userAns == 7){
 			deleteAllNodesPrompt();
 		}
 		std::cout << std::endl;
@@ -451,7 +451,7 @@ int main(){
 		"5 - list genealogy members to screen\n\n" <<
 		"6 - disconnect family members / marriages\n" <<
 		"7 - delete all family members / marriages\n" << std::endl;
-		std::cin >> userResp;
+		std::cin >> userAns;
 	}
 	
 	return 0;
