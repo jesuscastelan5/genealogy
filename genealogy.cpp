@@ -81,7 +81,7 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 
 
 /*
-	Tested:
+	Tested: 12/30/2023
 	Description: to be used with addNodes, takes away the repetitiveness of that subroutine
 		ensures user puts a valid answer to prompts
 		userAns is a string so we don't have to worry about flushing the input buffer
@@ -255,7 +255,7 @@ void listGenealogy(){
 
 
 /*
-	Tested: 12/27/2023
+	Tested: 12/30/2023
 	Description: deletes and releases all nodes and clears nodeDirectory of all elements
 		resets globalID to 0
 */
@@ -379,11 +379,11 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 
 
 /*
-	Tested:
+	Tested: 12/30/2023
 	Description: reads genealogy from a CSV file
 		connects nodes as needed
 */
-void readGenealogy(){
+void loadGenealogy(){
 	extern std::vector<node *> nodeDirectory;
 	
 	deleteAllNodesPrompt();
@@ -399,7 +399,7 @@ void readGenealogy(){
 			return;
 	
 		fileName = fileName + ".csv";
-		std::vector<fileRow> genCSV = readGenealogyCSV (fileName);
+		std::vector<fileRow> genCSV = loadGenealogyCSV (fileName);
 		if (genCSV.empty()){
 			std::cout << "Warning: " << fileName << " does not exist, is empty, or is formatted incorrectly." << std::endl;
 			std::cout << "Make sure the columns are separated by semicolons like so:" << std::endl;
@@ -431,26 +431,26 @@ int main(){
 		}else if (userResp == 2)
 			connectNodes();
 		else if (userResp == 3)
-			readGenealogy();
+			loadGenealogy();
 		else if (userResp == 4)
-			disconnectNodesPrompt();
-		else if (userResp == 5)
-			deleteAllNodesPrompt();
-		else if (userResp == 6)
-			listGenealogy();
-		else if (userResp == 7){
 			saveGenealogy();
+		else if (userResp == 5)
+			listGenealogy();
+		else if (userResp == 6)
+			disconnectNodesPrompt();
+		else if (userResp == 7){
+			deleteAllNodesPrompt();
 		}
 		std::cout << std::endl;
 		std::cout << "What would you like to do?" << std::endl;
 		std::cout << "0 - quit\n" <<
 		"1 - create family members / marriages\n" <<
 		"2 - connect family members / marriages\n" <<
-		"3 - load existing genealogy\n"
-		"4 - disconnect family members / marriages\n" <<
-		"5 - delete all family members / marriages\n" <<
-		"6 - list genealogy members to screen\n" <<
-		"7 - save genealogy to a file" << std::endl;
+		"3 - load existing genealogy\n" <<
+		"4 - save genealogy to a file\n\n" <<
+		"5 - list genealogy members to screen\n\n" <<
+		"6 - disconnect family members / marriages\n" <<
+		"7 - delete all family members / marriages\n" << std::endl;
 		std::cin >> userResp;
 	}
 	

@@ -11,15 +11,16 @@ typedef struct{
 }fileRow;
 
 /*
-	Tested: 12/29/2023
+	Tested: 12/30/2023
 	Description: reads CSV with a delimiter of ';'
-		if file with name of fileName doesn't exist,
+		If file with name of fileName doesn't exist,
 		it will return an empty vector of rowsRead
-		will ignore header
+		If file is empty, it will return an empty vector
+		Will ignore header
 	Param: fileName
 	Returns: contents of CSV file
 */
-std::vector <fileRow> readGenealogyCSV (std::string fileName){
+std::vector <fileRow> loadGenealogyCSV (std::string fileName){
 	std::vector <fileRow> rowsRead;
 
 	char sepChar = ';';
@@ -33,7 +34,7 @@ std::vector <fileRow> readGenealogyCSV (std::string fileName){
 		std::stringstream inputString (line);
 		
 		std::vector <std::string> dividedString = SplitStr(line, sepChar);
-		if (dividedString.size() == 1){
+		if (dividedString.size() < 2){
 			std::vector <fileRow> emptyVector;
 			return emptyVector;
 		}else if (dividedString[0] == "ID")
