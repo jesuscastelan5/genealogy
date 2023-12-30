@@ -275,7 +275,7 @@ void deleteAllNodes(){
 
 
 /*
-	Tested:
+	Tested: 12/30/2023
 	Description: warns user that current genealogy will be deleted
 		if a genealogy is detected
 */
@@ -283,20 +283,19 @@ void deleteAllNodesPrompt(){
 	extern std::vector<node *> nodeDirectory;
 	
 	if (nodeDirectory.empty()){
-		deleteAllNodes()
 		return;
 	}
 	std::string userAns;
-	std::cout << "Warning: this will delete your current genealogy.";
+	std::cout << "Warning: this will delete your current genealogy.  ";
 	do{
 		std::cout << "Do you want to proceed? (y/n)" << std::endl;
 		std::cin >> userAns;
-		if (userAns == "q" || userAns == "Q")
+		if (capitalize (userAns) == "Q")
 			return;
-		else if (userAns == "n" || userAns == "N")
+		else if (capitalize (userAns) == "N")
 			return;
-		else if (userAns == "y" || userAns == "Y"){
-			readGenealogy();
+		else if (capitalize (userAns) == "Y"){
+			deleteAllNodes();
 			return;
 		}
 		std::cout << "That's not a valid answer" << std::endl;
@@ -381,9 +380,8 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 
 /*
 	Tested:
-	Description:
-	Param:
-	Returns:
+	Description: reads genealogy from a CSV file
+		connects nodes as needed
 */
 void readGenealogy(){
 	extern std::vector<node *> nodeDirectory;
@@ -413,7 +411,7 @@ void readGenealogy(){
 			CSVToNodes(genCSV);
 			return;
 		}
-	}while (1 == 1)
+	}while (1 == 1);
 	
 }
 
