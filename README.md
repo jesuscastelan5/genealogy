@@ -1,7 +1,8 @@
 # Genealogy Maker
 
 ## Short Description
-This project is meant to help people make electronic genealogies without having to (a) use the internet and (b) share information they would like to keep private.
+This project is meant to help people make electronic genealogies without having to
+(a) use the internet and (b) share information they would like to keep private.
 
 ## Background
 I became fascinated by how MUMPS, a language used in health-tech, was able to handle data not stored in a table but in a tree.
@@ -17,8 +18,7 @@ I learned a lot about making and using pointers in this project, and I even beca
 ## Current Status
 These are the functionalities I would like to add to this project at some point:
 - Be able to draw the connections between the nodes.
-- Load a genealogy from a saved file.
-- Save to csv as well as txt files.
+- have option to load from/save to txt as well as csv
 
 ## Credits
 Jesus Castelan — Developer
