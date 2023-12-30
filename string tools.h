@@ -26,6 +26,28 @@ std::vector<std::string> SplitStr(std::string yourStr, char delim){
 }
 
 
+/*
+	Tested: 12/30/2023
+	Description:
+		did not feel like importing cstring
+		also, not hard to implement
+	Param: inputStr
+	Returns: all caps version of inputStr
+*/
+std::string capitalize (std::string inputStr){
+	std::string retStr;
+	
+	for (auto thisChar : inputStr){
+		if ((int) thisChar < 97 || (int) thisChar > 122)
+			retStr.push_back (thisChar);
+		else{
+			int capChar = (int) thisChar - 32;
+			retStr.push_back ((char) capChar);
+		}
+	}
+	
+	return retStr;
+}
 
 /*
 	Tested: 12/28/2023

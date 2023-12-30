@@ -1,10 +1,8 @@
 # include <iostream>
-# include "loadGenealogy.h"
+# include "string tools.h"
 
 int main (){
-	std::vector <fileRow> myG = readGenealogyCSV ("testG.csv");
-	
-	std::cout << "Hi" << std::endl;
+	std::cout << capitalize("abbz") << std::endl;
 
 	return 0;
 }

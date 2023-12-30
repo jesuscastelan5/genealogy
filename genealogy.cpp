@@ -36,7 +36,7 @@ int findNodeID (std::string prompt){
 		if (possMatches.empty())
 			std::cout << "Sorry, "<< nodeName << " does not exist in the genealogy." << std::endl;
 		nodeName = promptName (prompt);
-		if (nodeName == "\\quit")
+		if (capitalize(nodeName) == "\\QUIT")
 			return -1;
 		// at some point, find a way to disambiguate apparent duplicate entries
 		possMatches = getNodeID (nodeName);
@@ -63,6 +63,8 @@ void findNAddNode (std::string prompt, int mode, node * pNewNode){
 		return;
 	if (mode < 2){
 		std::string nodeName = promptName("What is the name of the new family member / marriage?");
+		if (capitalize(nodeName) == "\\QUIT")
+			return;
 		createNode (pNewNode, nodeName);
 	}else if (mode == 2){
 		childID = findNodeID ("What is the name of the child member / marriage of child?");
@@ -97,12 +99,12 @@ char addNodesPrompts (node * pNewNode, std::string prompt1, std::string prompt2,
 		std::cout << prompt1 << std::endl;
 		std::cin >> userAns;
 		
-		if (userAns == "q" || userAns == "Q" )
+		if (capitalize(userAns) == "Q" )
 			return 'q';
-		else if (userAns == "y" || userAns == "Y" ){
+		else if (capitalize(userAns) == "Y" ){
 			findNAddNode (prompt2, mode, pNewNode);
 			return 'y';
-		}else if (userAns == "n" || userAns == "N" )
+		}else if (capitalize(userAns) == "N" )
 			return 'n';
 		std::cout << "\nSorry, that's not a valid answer.\n" << std::endl;
 
@@ -283,7 +285,7 @@ void saveGenealogy(std::string fileName){
 	std::cout << "What would you like to call the txt file? (Type \\quit to quit)" << std::endl;
 	std::getline(std::cin >> std::ws, fileName);
 	
-	if (fileName == "\\quit" || fileName == "\\QUIT")
+	if (capitalize(fileName) == "\\QUIT")
 		return;
 	
 	std::ofstream myFile;
