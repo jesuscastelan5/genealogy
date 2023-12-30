@@ -1,8 +1,10 @@
 # include <iostream>
-# include "string tools.h"
+# include "loadGenealogy.h"
 
 int main (){
-	std::cout << IntToStr(98) << std::endl;
+	std::vector <fileRow> myG = readGenealogyCSV ("testG.csv");
+	
+	std::cout << "Hi" << std::endl;
 
 	return 0;
 }
