@@ -1,12 +1,12 @@
 # include <iostream>
+# include <string>
+# include <vector>
 # include "string tools.h"
 
 int main (){
-	std::cout << SplitStr("abbz,james", ',')[1] << std::endl;
-	if (SplitStr("", ',').empty())
-		std::cout << "works" << std::endl;
-	else
-		std::cout << "no work" << std::endl;
+	std::vector<std::string> myArr = {"", "a1", "2e", "tefgr", "14"};
+	for (auto elem : myArr)
+		std::cout << IntToStr(IsInt(elem)) << std::endl;
 
 	return 0;
 }

@@ -5,9 +5,10 @@
 # define FALSE 0
 
 /*
-	Tested:
-	Purpose:
-	Param:
+	Tested: 12/30/2023
+	Description: checks if a given string can be converted
+		into a decimal integer
+	Param: yourStr
 	Returns: boolean
 		TRUE if the entire string is an integer
 		FALSE otherwise
