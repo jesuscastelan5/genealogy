@@ -421,8 +421,8 @@ int globalID = 0;
 
 int main(){
 	std::string userAnsStr = "";
+	int userAns = -1;
 	do{
-		int userAns = -1;
 		
 		if (userAns == 1){
 			node * pNewNode = new node;
@@ -441,9 +441,7 @@ int main(){
 			disconnectNodesPrompt();
 		else if (userAns == 7){
 			deleteAllNodesPrompt();
-		}
-		
-		if (!(userAnsStr.empty())){
+		}else if (!(userAnsStr.empty()) || userAns != -1){
 			std::cout << std::endl;
 			std::cout << "That's not a correct answer" << std::endl;
 		}
