@@ -388,30 +388,35 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 */
 void readGenealogy(){
 	extern std::vector<node *> nodeDirectory;
+	std::vector<fileRow> genCSV;
 	
-	deleteAllNodes();
+	deleteAllNodesPrompt();
 	if (!(nodeDirectory.empty()))
 		return;
 	
 	std::string fileName;
+	do{
+		std::cout << "What is the name of the CSV file?" << std::endl;
+		std::cin >> fileName;
+		
+		if (capitalize(fileName) == "\\QUIT")
+			return;
 	
-	std::cout << "What is the name of the CSV file?" << std::endl;
-	std::cin >> fileName;
+		fileName = fileName + ".csv";
+		std::vector<fileRow> genCSV = readGenealogyCSV (fileName);
+		if (genCSV.empty()){
+			std::cout << "Warning: " << fileName << " does not exist, is empty, or is formatted incorrectly." << std::endl;
+			std::cout << "Make sure the columns are separated by semicolons like so:" << std::endl;
+			std::cout << "0;Abraham;1" << std::endl;
+			std::cout << "1;Isaac;2" << std::endl;
+			std::cout << "2;Jacob;" << std::endl;
+			return;
+		}else{
+			CSVToNodes(genCSV);
+			return;
+		}
+	}while (1 == 1)
 	
-	fileName = fileName + ".csv";
-	std::vector<fileRow> genCSV = readGenealogyCSV (fileName);
-	if (genCSV.empty()){
-		std::cout << "Warning: " << fileName << " does not exist, is empty, or is formatted incorrectly." << std::endl;
-		std::cout << "Make sure the columns are separated by semicolons like so:" << std::endl;
-		std::cout << "0;Abraham;1" << std::endl;
-		std::cout << "1;Isaac;2" << std::endl;
-		std::cout << "2;Jacob;" << std::endl;
-		return;
-	}
-	
-	CSVToNodes(genCSV);
-	
-	return;
 }
 
 
@@ -430,7 +435,7 @@ int main(){
 		}else if (userResp == 2)
 			connectNodes();
 		else if (userResp == 3)
-			readGenealogyPrompt();
+			readGenealogy();
 		else if (userResp == 4)
 			disconnectNodesPrompt();
 		else if (userResp == 5)
