@@ -305,7 +305,7 @@ void deleteAllNodesPrompt(){
 
 
 /*
-	Tested: 12/24/2023
+	Tested: 12/30/2023
 	Description: saves nodes to a (txt/csv) file
 */
 void saveGenealogy(){
@@ -313,14 +313,14 @@ void saveGenealogy(){
 	std::string colDelimiter = ";";
 	
 	std::string fileName;
-	std::cout << "What would you like to call the txt file? (Type \\quit to quit)" << std::endl;
+	std::cout << "What would you like to call the csv file? (Type \\quit to quit)" << std::endl;
 	std::getline(std::cin >> std::ws, fileName);
 	
 	if (capitalize(fileName) == "\\QUIT")
 		return;
 	
 	std::ofstream myFile;
-	myFile.open(fileName + ".txt");
+	myFile.open(fileName + ".csv");
 	// header
 	myFile << "ID" << colDelimiter << "Name" << colDelimiter << "Child IDs" << std::endl;
 	for (auto entry : nodeDirectory){
@@ -443,7 +443,7 @@ int main(){
 			deleteAllNodesPrompt();
 		}else if (!(userAnsStr.empty()) || userAns != -1){
 			std::cout << std::endl;
-			std::cout << "That's not a correct answer" << std::endl;
+			std::cout << "*** That's not a correct answer ***" << std::endl;
 		}
 		
 		std::cout << std::endl;
