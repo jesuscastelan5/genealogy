@@ -277,16 +277,28 @@ void deleteAllNodes(){
 
 /**/
 void deleteAllNodesPrompt(){
-	std::cout << "Warning: this will delete your entire genealogy." << std::endl;
-	do{
-		std::string userResp;
-		std::cout << "Do you wish to proceed? (y/n)" << std::endl;
-		std::cin >> userResp;
-	}while (capitalize(userResp) != "Y" && capitalize (userResp) != "N")
+	extern std::vector<node *> nodeDirectory;
 	
-	if (capitalize(userResp) != "Y" )
-		deleteAllNodes();
-	return;
+	if (nodeDirectory.empty()){
+		deleteAllNodes()
+		return;
+	}
+	std::string userAns;
+	std::cout << "Warning: this will delete your current genealogy.";
+	do{
+		std::cout << "Do you want to proceed? (y/n)" << std::endl;
+		std::cin >> userAns;
+		if (userAns == "q" || userAns == "Q")
+			return;
+		else if (userAns == "n" || userAns == "N")
+			return;
+		else if (userAns == "y" || userAns == "Y"){
+			readGenealogy();
+			return;
+		}
+		std::cout << "That's not a valid answer" << std::endl;
+	}while (1 == 1);
+	
 }
 
 
@@ -372,7 +384,12 @@ void CSVToNodes(std::vector<fileRow> genCSV){
 	Returns:
 */
 void readGenealogy(){
+	extern std::vector<node *> nodeDirectory;
+	
 	deleteAllNodes();
+	if (!(nodeDirectory.empty()))
+		return;
+	
 	std::string fileName;
 	
 	std::cout << "What is the name of the CSV file?" << std::endl;
@@ -393,37 +410,6 @@ void readGenealogy(){
 	
 	return;
 }
-
-
-/*
-	Tested:
-	Description:
-	Param:
-	Returns:
-*/
-void readGenealogyPrompt(){
-	extern std::vector<node *> nodeDirectory;
-	if (!nodeDirectory.empty()){
-		std::string userAns;
-		std::cout << "Warning: ";
-		do{
-			std::cout << "this will delete your current genealogy.  Do you want to proceed? (y/n)" << std::endl;
-			std::cin >> userAns;
-			if (userAns == "q" || userAns == "Q")
-				return;
-			else if (userAns == "n" || userAns == "N")
-				return;
-			else if (userAns == "y" || userAns == "Y"){
-				readGenealogy();
-				return;
-			}
-			std::cout << "That's not a valid answer" << std::endl;
-		}while (1 == 1);
-	}else
-		readGenealogy();
-	return;
-}
-
 
 
 std::vector<node *> nodeDirectory;
