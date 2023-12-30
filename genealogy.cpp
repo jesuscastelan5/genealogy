@@ -52,6 +52,7 @@ int findNodeID (std::string prompt){
 	Param: prompt - the question for user,
 		mode - 0 corresponds to child,
 			1 corresponds to parent
+			2 corresponds to connecting already existing nodes,
 */
 void findNAddNode (std::string prompt, int mode, node * pNewNode){
 	extern std::vector<node *> nodeDirectory;
@@ -133,7 +134,9 @@ void addNodes(node * pNewNode){
 	if (userAns != 'n')
 		return;
 	
-	std::string nodeName = promptName ("What is the name of the new family member / marriage?");
+	std::string nodeName = promptName ("What is the name of the new family member / marriage? Type \\quit to quit.");
+	if (capitalize(nodeName) == "\\QUIT")
+		return;
 	createNode (pNewNode, nodeName);
 	return;
 }
@@ -254,7 +257,7 @@ void listGenealogy(){
 
 /*
 	Tested: 12/27/2023
-	Description: deletes and releases all nodes and clears all elements from nodeDirectory
+	Description: deletes and releases all nodes and clears nodeDirectory of all elements
 		resets globalID to 0
 */
 void deleteAllNodes(){
@@ -268,6 +271,21 @@ void deleteAllNodes(){
 	}
 	
 	globalID = 0;
+	return;
+}
+
+
+/**/
+void deleteAllNodesPrompt(){
+	std::cout << "Warning: this will delete your entire genealogy." << std::endl;
+	do{
+		std::string userResp;
+		std::cout << "Do you wish to proceed? (y/n)" << std::endl;
+		std::cin >> userResp;
+	}while (capitalize(userResp) != "Y" && capitalize (userResp) != "N")
+	
+	if (capitalize(userResp) != "Y" )
+		deleteAllNodes();
 	return;
 }
 
@@ -427,7 +445,7 @@ int main(){
 		else if (userResp == 4)
 			disconnectNodesPrompt();
 		else if (userResp == 5)
-			deleteAllNodes();
+			deleteAllNodesPrompt();
 		else if (userResp == 6)
 			listGenealogy();
 		else if (userResp == 7){
